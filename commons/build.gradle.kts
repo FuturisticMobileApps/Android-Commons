@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.appcompat)
+    api(libs.material)
 }
