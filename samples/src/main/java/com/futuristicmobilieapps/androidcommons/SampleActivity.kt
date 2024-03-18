@@ -10,3 +10,7 @@ class SampleActivity : AppCompatActivity() {
         setContentView(R.layout.sample_activity)
     }
 }
+
+fun String?.isValidString() : Boolean{
+   return this != null && this != ""
+}
