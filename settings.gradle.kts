@@ -23,3 +23,4 @@ rootProject.name = "Android-Commons"
 include(":samples")
 include(":commons")
 include(":networking")
+include(":database:room")
