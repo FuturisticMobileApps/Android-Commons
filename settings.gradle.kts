@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Android-Commons"
 include(":samples")
 include(":commons")
+include(":networking")
