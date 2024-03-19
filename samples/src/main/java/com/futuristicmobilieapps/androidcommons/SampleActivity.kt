@@ -13,7 +13,7 @@ class SampleActivity : AppCompatActivity() {
 }
 
 fun TextView?.getTextFromTextView(): String =
-    if (this?.text?.toString().isValidString()) this?.text.toString().validateString() else "null"
+    if (this?.text?.toString().isValidString()) this?.text.toString().validateString() else ""
 
 fun CharSequence?.isValidString(): Boolean {
 
