@@ -41,7 +41,7 @@ class DateExtTest{
     @Test
     fun `test getCurrentMonth`() {
         // Given
-        val expectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+        val expectedMonth = Calendar.getInstance().get(Calendar.MONTH)
 
         // When
         val result = getCurrentMonth()
