@@ -1,8 +1,5 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
-import android.content.Context
-import android.view.View
-import androidx.fragment.app.Fragment
 import java.text.NumberFormat
 import java.text.ParseException
 import java.util.Locale
@@ -44,14 +41,6 @@ fun String?.getAmountValueFromDollarFormat(): Double {
 fun String?.stringToFloat(): Float = this?.toFloatOrNull() ?: 0F
 
 fun String?.stringToInt():Int = this?.toIntOrNull() ?: 0
-
-fun Context.getStringResources(stringId: Int?)= stringId?.let { resources.getString(it) } ?: ""
-
-fun Fragment.getStringResources(stringId: Int?): String = requireContext().getStringResources(stringId)
-
-fun View.getStringResources(stringId: Int?) = rootView?.context?.getStringResources(stringId) ?: ""
-
-
 
 
 
