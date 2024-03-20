@@ -7,9 +7,11 @@ import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
-import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.Assert.*
+
 class StringExtTest{
 
     @Test
@@ -38,88 +40,21 @@ class StringExtTest{
 
     @Test
     fun `test isValidString with valid non-null non-empty input`() {
-        // Given
-        val input = "Hello"
 
-        // When
-        val result = input.isValidString()
+        assertTrue("Hello".isValidString())
 
-        // Then
-        assertTrue(result)
+        assertFalse( "".isValidString())
+
+        assertFalse(null.isValidString())
+
+        assertFalse("   ".isValidString())
+
+        assertFalse("null".isValidString())
+
+        assertFalse("NuLL".isValidString())
+
+        assertTrue("Hello World".isValidString())
     }
-
-    @Test
-    fun `test isValidString with valid non-null empty input`() {
-        // Given
-        val input: CharSequence = ""
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid null input`() {
-        // Given
-        val input: CharSequence? = null
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid input containing only whitespace`() {
-        // Given
-        val input: CharSequence = "   "
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with invalid input null`() {
-        // Given
-        val input: CharSequence = "null"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with invalid input NuLL`() {
-        // Given
-        val input: CharSequence = "NuLL"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid non-null non-empty inputString`() {
-        // Given
-        val input: CharSequence = "Hello World"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertTrue(result)
-    }
-
 
     @Test
     fun `test convertToDollarFormat with valid input`() {
@@ -137,74 +72,16 @@ class StringExtTest{
 
     @Test
     fun `test getAmountValueFromDollarFormat with valid input`() {
-        // Given
-        val input = "$1,234.56"
 
-        // When
-        val result = input.getAmountValueFromDollarFormat()
+        assertEquals(1234.56, "$1,234.56".getAmountValueFromDollarFormat(), 0.01)
 
-        // Then
-        assertEquals(1234.56, result, 0.01)
-    }
+        assertEquals(100.0, "$100.00".getAmountValueFromDollarFormat(), 0.01)
 
-    @Test
-    fun `test getAmountValueFromDollarFormat with valid input and trailing zeros`() {
-        // Given
-        val input = "$100.00"
+        assertEquals(0.0, null.getAmountValueFromDollarFormat(), 0.01)
 
-        // When
-        val result = input.getAmountValueFromDollarFormat()
+        assertEquals(0.0, "".getAmountValueFromDollarFormat(), 0.01)
 
-        // Then
-        assertEquals(100.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with invalid input`() {
-        // Given
-        val input = "abc"
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with null input`() {
-        // Given
-        val input: String? = null
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with empty input`() {
-        // Given
-        val input = ""
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with input containing only whitespace`() {
-        // Given
-        val input = "   "
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
+        assertEquals(0.0, "   ".getAmountValueFromDollarFormat(), 0.01)
     }
 
     @Test

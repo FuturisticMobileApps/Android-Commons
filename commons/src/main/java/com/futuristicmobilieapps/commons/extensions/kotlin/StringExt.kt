@@ -1,7 +1,6 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
 import java.text.NumberFormat
-import java.text.ParseException
 import java.util.Locale
 
 fun CharSequence?.validateString() = this?.toString()?.trim() ?: ""
@@ -24,17 +23,11 @@ fun String.convertToDollarFormat(): String =
 
 fun String?.getAmountValueFromDollarFormat(): Double {
 
-    val cleanedString = this?.validateString() ?: return 0.0
+    if (!isValidString() || isNullOrEmpty()) return 0.00
 
-    return try {
+    return String.let {
 
-        NumberFormat.getCurrencyInstance(Locale.US).parse(cleanedString)?.toDouble() ?:
-
-        cleanedString.replace(Regex("[$,]"), "").toDoubleOrNull() ?: 0.0
-
-    } catch (e: ParseException) {
-
-        0.0
+        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.00
     }
 }
 
