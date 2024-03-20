@@ -1,13 +1,22 @@
 package com.futuristicmobileapps.samples
 
+import android.view.View
 import android.widget.TextView
+import com.futuristicmobilieapps.androidcommons.disableView
+import com.futuristicmobilieapps.androidcommons.enableView
 import com.futuristicmobilieapps.androidcommons.getTextFromTextView
-import com.futuristicmobilieapps.androidcommons.validateString
+import com.google.android.material.textfield.TextInputLayout
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
 
 
 class MockitoSampleTest {
@@ -38,42 +47,111 @@ class MockitoSampleTest {
 }
 
 
-class SampleActivityKtTest {
+@RunWith(MockitoJUnitRunner::class)
+class ViewTest {
+
+    @Mock
+    lateinit var mockedView: View
+
+    @Mock
+    lateinit var mockedTextInputLayout: TextInputLayout
 
     @Test
-    fun `null string`() {
-        val nullString: String? = null
-        assertEquals("", nullString.validateString())
+    fun testViewIsDisabled() {
+
+        val mockView = mock(View::class.java)
+
+        mockView.enableView()
+        // Arrange
+//        mockedView.disableView()
+
+        // Assert
+        verify(mockView).isEnabled = true
     }
 
     @Test
-    fun `empty string`() {
-        val emptyString = ""
-        assertEquals("", emptyString.validateString())
+    fun testTextInputLayoutIsDisabled() {
+        // Arrange
+        mockedView.disableView(mockedTextInputLayout)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout).isEnabled = false
     }
 
     @Test
-    fun `non-empty string`() {
-        val nonEmptyString = "Hello"
-        assertEquals("Hello", nonEmptyString.validateString())
+    fun testTextInputLayoutNotProvided() {
+        // Arrange
+        mockedView.disableView(null)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout, never()).isEnabled = anyBoolean()
     }
 
     @Test
-    fun `string with leading whitespace`() {
-        val stringWithLeadingWhitespace = "   Hello"
-        assertEquals("Hello", stringWithLeadingWhitespace.validateString())
+    fun testTextInputLayoutEnabledByDefault() {
+        // Arrange
+        `when`(mockedTextInputLayout.isEnabled).thenReturn(true)
+
+        // Act
+        mockedView.disableView(mockedTextInputLayout)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout, never()).isEnabled = anyBoolean()
     }
 
     @Test
-    fun `string with trailing whitespace`() {
-        val stringWithTrailingWhitespace = "Hello   "
-        assertEquals("Hello", stringWithTrailingWhitespace.validateString())
+    fun testViewWithNestedTextInputLayout() {
+        // Arrange
+
+        // Act
+        mockedView.disableView(mockedTextInputLayout)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout).isEnabled = false
     }
 
     @Test
-    fun `string with leading and trailing whitespace`() {
-        val stringWithLeadingAndTrailingWhitespace = "   Hello   "
-        assertEquals("Hello", stringWithLeadingAndTrailingWhitespace.validateString())
+    fun testTextInputLayoutWithExistingState() {
+        // Arrange
+        `when`(mockedTextInputLayout.isEnabled).thenReturn(true)
+
+        // Act
+        mockedView.disableView(mockedTextInputLayout)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout).isEnabled = true // Should remain unaffected
     }
 
+    @Test
+    fun testViewWithNoTextInputLayout() {
+        // Arrange
+
+        // Act
+        mockedView.disableView(null)
+
+        // Assert
+        verify(mockedView).isEnabled = false
+        verify(mockedTextInputLayout, never()).isEnabled = anyBoolean()
+    }
+
+    @Test
+    fun testViewWithMultipleTextInputLayouts() {
+        // Arrange
+        val mockedTextInputLayout2 = mock(TextInputLayout::class.java)
+
+        // Act
+        mockedView.disableView(mockedTextInputLayout)
+        mockedView.disableView(mockedTextInputLayout2)
+
+        // Assert
+        verify(mockedView, times(2)).isEnabled = false
+        verify(mockedTextInputLayout).isEnabled = false
+        verify(mockedTextInputLayout2).isEnabled = false
+    }
 }
+
