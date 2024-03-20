@@ -3,6 +3,8 @@ package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountValueFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import org.junit.Test
@@ -321,4 +323,102 @@ class StringExtTest{
         // Then
         assertEquals(0.0, result, 0.01)
     }
+
+    @Test
+    fun `test stringToFloat with valid float string`() {
+        // Given
+        val input = "3.14"
+
+        // When
+        val result = input.stringToFloat()
+
+        // Then
+        assertEquals(3.14f, result)
+    }
+
+    @Test
+    fun `test stringToFloat with invalid float string`() {
+        // Given
+        val input = "abc"
+
+        // When
+        val result = input.stringToFloat()
+
+        // Then
+        assertEquals(0f, result)
+    }
+
+    @Test
+    fun `test stringToFloat with null input`() {
+        // Given
+        val input: String? = null
+
+        // When
+        val result = input.stringToFloat()
+
+        // Then
+        assertEquals(0f, result)
+    }
+
+    @Test
+    fun `test stringToFloat with empty string`() {
+        // Given
+        val input = ""
+
+        // When
+        val result = input.stringToFloat()
+
+        // Then
+        assertEquals(0f, result)
+    }
+
+    @Test
+    fun `test stringToInt with valid integer string`() {
+        // Given
+        val input = "42"
+
+        // When
+        val result = input.stringToInt()
+
+        // Then
+        assertEquals(42, result)
+    }
+
+    @Test
+    fun `test stringToInt with invalid integer string`() {
+        // Given
+        val input = "abc"
+
+        // When
+        val result = input.stringToInt()
+
+        // Then
+        assertEquals(0, result)
+    }
+
+    @Test
+    fun `test stringToInt with null input`() {
+        // Given
+        val input: String? = null
+
+        // When
+        val result = input.stringToInt()
+
+        // Then
+        assertEquals(0, result)
+    }
+
+    @Test
+    fun `test stringToInt with empty string`() {
+        // Given
+        val input = ""
+
+        // When
+        val result = input.stringToInt()
+
+        // Then
+        assertEquals(0, result)
+    }
+
+
 }
