@@ -1,10 +1,6 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
-import android.content.Context
-import android.view.View
-import androidx.fragment.app.Fragment
 import java.text.NumberFormat
-import java.text.ParseException
 import java.util.Locale
 
 fun CharSequence?.validateString() = this?.toString()?.trim() ?: ""
@@ -27,31 +23,17 @@ fun String.convertToDollarFormat(): String =
 
 fun String?.getAmountValueFromDollarFormat(): Double {
 
-    val cleanedString = this?.validateString() ?: return 0.0
+    if (!isValidString() || isNullOrEmpty()) return 0.00
 
-    return try {
+    return String.let {
 
-        NumberFormat.getCurrencyInstance(Locale.US).parse(cleanedString)?.toDouble() ?:
-
-        cleanedString.replace(Regex("[$,]"), "").toDoubleOrNull() ?: 0.0
-
-    } catch (e: ParseException) {
-
-        0.0
+        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.00
     }
 }
 
 fun String?.stringToFloat(): Float = this?.toFloatOrNull() ?: 0F
 
 fun String?.stringToInt():Int = this?.toIntOrNull() ?: 0
-
-fun Context.getStringResources(stringId: Int?)= stringId?.let { resources.getString(it) } ?: ""
-
-fun Fragment.getStringResources(stringId: Int?): String = requireContext().getStringResources(stringId)
-
-fun View.getStringResources(stringId: Int?) = rootView?.context?.getStringResources(stringId) ?: ""
-
-
 
 
 
