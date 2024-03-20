@@ -38,6 +38,8 @@ android {
 dependencies {
     implementation(project(":commons"))
 
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
