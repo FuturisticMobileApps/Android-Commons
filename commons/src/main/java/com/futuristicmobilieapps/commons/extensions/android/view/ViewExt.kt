@@ -5,50 +5,52 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.futuristicmobilieapps.commons.R
 import com.google.android.material.textfield.TextInputLayout
 
-fun View.visible(){
+fun View.visible() {
     this.visibility = View.VISIBLE
 }
 
-fun View?.invisible(){
+fun View?.invisible() {
     this?.visibility = View.INVISIBLE
 }
 
-fun View?.gone(){
+fun View?.gone() {
     this?.visibility = View.GONE
 }
 
-fun View?.enable(){
+fun View?.enable() {
     this?.isEnabled = true
 }
 
-fun View?.disable(){
+fun View?.disable() {
     this?.isEnabled = false
 }
 
-fun View?.disableView(textInputLayout: TextInputLayout? = null){
+fun View?.disableView(textInputLayout: TextInputLayout? = null) {
     this?.isEnabled = false
 
-    textInputLayout?.apply{
-        isEnabled  =false
+    textInputLayout?.apply {
+        isEnabled = false
 
-        boxBackgroundColor = resources.getColor(R.color.disabled_color)
+        boxBackgroundColor = ContextCompat.getColor(context, R.color.disabled_color)
 
     }
 }
 
-fun View?.enableView(textInputLayout: TextInputLayout? = null){
+fun View?.enableView(textInputLayout: TextInputLayout? = null) {
     this?.isEnabled = true
 
     textInputLayout?.apply {
         isEnabled = true
 
-        boxBackgroundColor = resources.getColor(R.color.transparent)
+        boxBackgroundColor = ContextCompat.getColor(context,R.color.transparent)
     }
 }
+
 fun View?.disableAllChildViews() {
     this?.isEnabled = false
     if (this is ViewGroup) {
@@ -58,12 +60,13 @@ fun View?.disableAllChildViews() {
     }
 }
 
-fun View.disableAllViews() {
+fun View?.disableAllViews() {
     try {
 
         when (this) {
 
             is ViewGroup -> {
+                this.isEnabled = false
                 forEach { child ->
                     if (child is TextInputLayout)
                         child.disableView(child)
