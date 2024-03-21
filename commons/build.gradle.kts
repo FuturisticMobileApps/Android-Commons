@@ -7,6 +7,9 @@ android {
     namespace = "com.futuristicmobilieapps.commons"
     compileSdk = 34
     val jvmVersion = "1.8"
+    defaultConfig {
+        minSdk = 21
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -21,4 +24,5 @@ dependencies {
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.material)
+    implementation(project(":samples"))
 }

@@ -33,6 +33,8 @@ class StringExtTest {
 
         assertEquals(5, "Hello".validateLength())
 
+        assertEquals(5, " Hello ".validateLength())
+
         assertEquals(0, "".validateLength())
 
         assertEquals(0, null.validateLength())
@@ -46,7 +48,7 @@ class StringExtTest {
     fun `test isValidString with valid non-null non-empty input`() {
 
         //  Positive scenarios
-        assertTrue("Hello".isValidString())
+        assertTrue("Hello World".isValidString())
 
         assertTrue(("Hello World" as CharSequence).isValidString())
 
@@ -79,20 +81,24 @@ class StringExtTest {
         assertEquals("$0.00", "".convertToDollarFormat())
 
         assertEquals("$0.00", "   ".convertToDollarFormat())
+
+        assertEquals("$0.00", null.convertToDollarFormat())
     }
 
     @Test
     fun `test getAmountValueFromDollarFormat with valid input`() {
 
-        assertEquals(1234.56, "$1,234.56".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.01)
 
-        assertEquals(100.0, "$100.00".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.01)
 
-        assertEquals(0.0, null.getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.00)
 
-        assertEquals(0.0, "".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(),0.0)
 
-        assertEquals(0.0, "   ".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.01)
+
+        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.01)
     }
 
     @Test

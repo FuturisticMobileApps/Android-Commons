@@ -23,7 +23,7 @@ inline fun CharSequence?.isValidString(string: (String) -> Unit): Boolean =
     isValidString().also { isValid -> if (isValid) string(validateString()) }
 
 fun String.convertToDollarFormat(): String = NumberFormat.getCurrencyInstance(Locale.US).format(
-    validateString().toDoubleOrNull().validateDouble()
+    validateString().stringToDouble()
 )
 
 fun String?.getAmountValueFromDollarFormat(): Double =
