@@ -21,4 +21,5 @@ dependencies {
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.material)
+    implementation(project(":samples"))
 }
