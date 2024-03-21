@@ -2,7 +2,7 @@ package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
 import com.futuristicmobilieapps.androidcommons.validateString
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
-import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountValueFromDollarFormat
+import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
@@ -12,14 +12,14 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class StringExtTest{
+class StringExtTest {
 
     @Test
     fun `test validateString with non-null non-empty input`() {
 
         assertEquals("Hello", "  Hello  ".validateString())
 
-        assertEquals("","".validateString())
+        assertEquals("", "".validateString())
 
         assertEquals("", null.validateString())
 
@@ -30,6 +30,8 @@ class StringExtTest{
     fun `test validateLength with non-null non-empty input`() {
 
         assertEquals(5, "Hello".validateLength())
+
+        assertEquals(5, " Hello ".validateLength())
 
         assertEquals(0, "".validateLength())
 
@@ -43,7 +45,7 @@ class StringExtTest{
 
         assertTrue("Hello".isValidString())
 
-        assertFalse( "".isValidString())
+        assertFalse("".isValidString())
 
         assertFalse(null.isValidString())
 
@@ -68,20 +70,24 @@ class StringExtTest{
         assertEquals("$0.00", "".convertToDollarFormat())
 
         assertEquals("$0.00", "   ".convertToDollarFormat())
+
+        assertEquals("$0.00", null.convertToDollarFormat())
     }
 
     @Test
     fun `test getAmountValueFromDollarFormat with valid input`() {
 
-        assertEquals(1234.56, "$1,234.56".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.01)
 
-        assertEquals(100.0, "$100.00".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.01)
 
-        assertEquals(0.0, null.getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.00)
 
-        assertEquals(0.0, "".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(),0.0)
 
-        assertEquals(0.0, "   ".getAmountValueFromDollarFormat(), 0.01)
+        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.01)
+
+        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.01)
     }
 
     @Test

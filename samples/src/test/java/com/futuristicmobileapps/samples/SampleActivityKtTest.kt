@@ -1,10 +1,14 @@
 package com.futuristicmobileapps.samples
 
+import android.content.Context
 import android.view.View
 import android.widget.TextView
+import androidx.test.core.app.ApplicationProvider
+import com.futuristicmobilieapps.androidcommons.R
 import com.futuristicmobilieapps.androidcommons.disableView
-import com.futuristicmobilieapps.androidcommons.enableView
 import com.futuristicmobilieapps.androidcommons.getTextFromTextView
+import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
+import com.futuristicmobilieapps.commons.extensions.android.view.enableView
 import com.google.android.material.textfield.TextInputLayout
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -152,6 +156,31 @@ class ViewTest {
         verify(mockedView, times(2)).isEnabled = false
         verify(mockedTextInputLayout).isEnabled = false
         verify(mockedTextInputLayout2).isEnabled = false
+    }
+
+    @Test
+    fun testGetStringResourcesWithNonNullId() {
+        // Arrange
+        val context: Context = ApplicationProvider.getApplicationContext()
+
+        // Act
+        val result = context.getStringResources(R.string.app_name)
+
+        // Assert
+        assertEquals("Android-Commons", result)
+    }
+
+    @Test
+    fun testGetStringResourcesWithNullId() {
+        // Arrange
+        val context: Context = ApplicationProvider.getApplicationContext()
+        val stringId: Int? = null
+
+        // Act
+        val result = context.getStringResources(stringId)
+
+        // Assert
+        assertEquals("", result)
     }
 }
 

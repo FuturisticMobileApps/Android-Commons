@@ -1,5 +1,6 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
+import com.futuristicmobilieapps.commons.extensions.android.util.tryCatch
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -14,26 +15,21 @@ fun CharSequence?.isValidString(): Boolean {
     return textValue.isNotEmpty() && !textValue.equals("null", ignoreCase = true)
 }
 
-fun String.convertToDollarFormat(): String =
+fun String?.convertToDollarFormat(): String = NumberFormat.getCurrencyInstance(Locale.US).format(
+    validateString().stringToDouble()
+)
 
-    NumberFormat.getCurrencyInstance(Locale.US).format(validateString()
-
-        .toDoubleOrNull().validateDouble())
-
-
-fun String?.getAmountValueFromDollarFormat(): Double {
-
-    if (!isValidString() || isNullOrEmpty()) return 0.00
-
-    return String.let {
-
-        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.00
+fun String?.getAmountFromDollarFormat(): Double = tryCatch(0.0) {
+    validateString().run {
+        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.0
     }
 }
 
+fun String?.stringToInt(): Int = this?.toIntOrNull() ?: 0
+
 fun String?.stringToFloat(): Float = this?.toFloatOrNull() ?: 0F
 
-fun String?.stringToInt():Int = this?.toIntOrNull() ?: 0
+fun String?.stringToDouble(): Double = this?.toDoubleOrNull() ?: 0.0
 
 
 
