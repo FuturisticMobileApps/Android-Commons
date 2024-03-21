@@ -1,14 +1,14 @@
 package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
-import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
-import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountValueFromDollarFormat
+import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToDouble
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToLong
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
+import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -86,19 +86,19 @@ class StringExtTest {
     }
 
     @Test
-    fun `test getAmountValueFromDollarFormat with valid input`() {
+    fun `test getAmountFromDollarFormat with valid input`() {
 
-        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.01)
+        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.01)
+        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.00)
+        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(),0.0)
+        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.01)
+        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.01)
+        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.0)
     }
 
     @Test

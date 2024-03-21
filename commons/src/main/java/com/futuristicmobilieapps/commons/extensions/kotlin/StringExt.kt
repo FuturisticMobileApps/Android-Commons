@@ -1,5 +1,6 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
+import com.futuristicmobilieapps.commons.extensions.android.util.tryCatch
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -22,14 +23,16 @@ inline fun String?.isValidString(string: (String) -> Unit): Boolean =
 inline fun CharSequence?.isValidString(string: (String) -> Unit): Boolean =
     isValidString().also { isValid -> if (isValid) string(validateString()) }
 
-fun String.convertToDollarFormat(): String = NumberFormat.getCurrencyInstance(Locale.US).format(
+fun String?.convertToDollarFormat(): String = NumberFormat.getCurrencyInstance(Locale.US).format(
     validateString().stringToDouble()
 )
 
-fun String?.getAmountValueFromDollarFormat(): Double =
-    NumberFormat.getCurrencyInstance(Locale.US).parse(
-        if (validateLength() > 0) validateString() else "$0.0"
-    )?.toDouble() ?: 0.00
+fun String?.getAmountFromDollarFormat(): Double = tryCatch(0.0) {
+    validateString().run {
+        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.0
+    }
+}
+
 
 fun String?.stringToDouble(): Double = this?.toDoubleOrNull() ?: 0.0
 
