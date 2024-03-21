@@ -1,25 +1,27 @@
 package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
-import com.futuristicmobilieapps.androidcommons.validateString
+import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountValueFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToDouble
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToLong
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class StringExtTest{
+class StringExtTest {
 
     @Test
     fun `test validateString with non-null non-empty input`() {
 
         assertEquals("Hello", "  Hello  ".validateString())
 
-        assertEquals("","".validateString())
+        assertEquals("", "".validateString())
 
         assertEquals("", null.validateString())
 
@@ -36,14 +38,24 @@ class StringExtTest{
         assertEquals(0, null.validateLength())
 
         assertEquals(0, "  ".validateLength())
+
+        assertEquals(13, ("Hello, World!" as CharSequence).validateLength())
     }
 
     @Test
     fun `test isValidString with valid non-null non-empty input`() {
 
+        //  Positive scenarios
         assertTrue("Hello".isValidString())
 
-        assertFalse( "".isValidString())
+        assertTrue(("Hello World" as CharSequence).isValidString())
+
+        assertTrue("Hello World".isValidString { it.isValidString() })
+
+        assertTrue(("Hello World" as CharSequence).isValidString { it.isValidString() })
+
+        //  Negative scenarios
+        assertFalse("".isValidString())
 
         assertFalse(null.isValidString())
 
@@ -53,7 +65,6 @@ class StringExtTest{
 
         assertFalse("NuLL".isValidString())
 
-        assertTrue("Hello World".isValidString())
     }
 
     @Test
@@ -85,6 +96,16 @@ class StringExtTest{
     }
 
     @Test
+    fun `test stringToDouble with valid double string`() {
+
+        assertEquals(3.14, "3.14".stringToDouble(), 0.0)
+
+        assertEquals(0.0, "abc".stringToDouble(), 0.0)
+
+        assertEquals(0.0, null.stringToDouble(), 0.0)
+    }
+
+    @Test
     fun `test stringToFloat with valid float string`() {
 
         assertEquals(3.14f, "3.14".stringToFloat())
@@ -92,6 +113,18 @@ class StringExtTest{
         assertEquals(0f, "abc".stringToFloat())
 
         assertEquals(0f, null.stringToFloat())
+    }
+
+    @Test
+    fun `test stringToLong with valid long string`() {
+
+        assertEquals(42, "42".stringToLong())
+
+        assertEquals(0, "abc".stringToLong())
+
+        assertEquals(0, null.stringToLong())
+
+        assertEquals(0, "".stringToLong())
     }
 
     @Test
