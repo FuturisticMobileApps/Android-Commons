@@ -1,57 +1,46 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
-import android.content.Context
-import android.view.View
-import androidx.fragment.app.Fragment
+import com.futuristicmobilieapps.commons.extensions.android.util.tryCatch
 import java.text.NumberFormat
-import java.text.ParseException
 import java.util.Locale
 
-fun CharSequence?.validateString() = this?.toString()?.trim() ?: ""
+fun String?.validateString(): String = this?.trim() ?: ""
 
-fun String?.validateLength() = validateString().length
+fun String?.validateLength(): Int = validateString().length
 
-fun CharSequence?.isValidString(): Boolean {
+fun CharSequence?.validateString(): String = this?.toString().validateString()
 
-    val textValue = this?.toString()?.trim() ?: return false
+fun CharSequence?.validateLength(): Int = validateString().validateLength()
 
-    return textValue.isNotEmpty() && !textValue.equals("null", ignoreCase = true)
-}
+fun String?.isValidString(): Boolean =
+    !isNullOrBlank() && !validateString().equals("null", true) && validateString() != ""
 
-fun String.convertToDollarFormat(): String =
+fun CharSequence?.isValidString(): Boolean = validateString().isValidString()
 
-    NumberFormat.getCurrencyInstance(Locale.US).format(validateString()
+inline fun String?.isValidString(string: (String) -> Unit): Boolean =
+    isValidString().also { isValid -> if (isValid) string(validateString()) }
 
-        .toDoubleOrNull().validateDouble())
+inline fun CharSequence?.isValidString(string: (String) -> Unit): Boolean =
+    isValidString().also { isValid -> if (isValid) string(validateString()) }
 
+fun String?.convertToDollarFormat(): String = NumberFormat.getCurrencyInstance(Locale.US).format(
+    validateString().stringToDouble()
+)
 
-fun String?.getAmountValueFromDollarFormat(): Double {
-
-    val cleanedString = this?.validateString() ?: return 0.0
-
-    return try {
-
-        NumberFormat.getCurrencyInstance(Locale.US).parse(cleanedString)?.toDouble() ?:
-
-        cleanedString.replace(Regex("[$,]"), "").toDoubleOrNull() ?: 0.0
-
-    } catch (e: ParseException) {
-
-        0.0
+fun String?.getAmountFromDollarFormat(): Double = tryCatch(0.0) {
+    validateString().run {
+        NumberFormat.getCurrencyInstance(Locale.US).parse(this)?.toDouble() ?: 0.0
     }
 }
 
+
+fun String?.stringToDouble(): Double = this?.toDoubleOrNull() ?: 0.0
+
 fun String?.stringToFloat(): Float = this?.toFloatOrNull() ?: 0F
 
-fun String?.stringToInt():Int = this?.toIntOrNull() ?: 0
+fun String?.stringToLong(): Long = this?.toLongOrNull() ?: 0
 
-fun Context.getStringResources(stringId: Int?)= stringId?.let { resources.getString(it) } ?: ""
-
-fun Fragment.getStringResources(stringId: Int?): String = requireContext().getStringResources(stringId)
-
-fun View.getStringResources(stringId: Int?) = rootView?.context?.getStringResources(stringId) ?: ""
-
-
+fun String?.stringToInt(): Int = this?.toIntOrNull() ?: 0
 
 
 

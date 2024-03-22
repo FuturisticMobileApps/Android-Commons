@@ -1,424 +1,147 @@
 package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
-import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountValueFromDollarFormat
+import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToDouble
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToLong
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.Assert.*
-class StringExtTest{
+
+class StringExtTest {
 
     @Test
     fun `test validateString with non-null non-empty input`() {
-        // Given
-        val input: CharSequence = "  Hello  "
 
-        // When
-        val result = input.validateString()
+        assertEquals("Hello", "  Hello  ".validateString())
 
-        // Then
-        assertEquals("Hello", result)
-    }
+        assertEquals("", "".validateString())
 
-    @Test
-    fun `test validateString with non-null empty input`() {
-        // Given
-        val input: CharSequence = ""
+        assertEquals("", null.validateString())
 
-        // When
-        val result = input.validateString()
-
-        // Then
-        assertEquals("", result)
-    }
-
-    @Test
-    fun `test validateString with null input`() {
-        // Given
-        val input: CharSequence? = null
-
-        // When
-        val result = input.validateString()
-
-        // Then
-        assertEquals("", result)
-    }
-
-    @Test
-    fun `test validateString with input containing only whitespace`() {
-        // Given
-        val input: CharSequence = "   "
-
-        // When
-        val result = input.validateString()
-
-        // Then
-        assertEquals("", result)
+        assertEquals("", "  ".validateString())
     }
 
     @Test
     fun `test validateLength with non-null non-empty input`() {
-        // Given
-        val input = "Hello"
 
-        // When
-        val result = input.validateLength()
+        assertEquals(5, "Hello".validateLength())
 
-        // Then
-        assertEquals(5, result)
-    }
+        assertEquals(5, " Hello ".validateLength())
 
-    @Test
-    fun `test validateLength with non-null empty input`() {
-        // Given
-        val input = ""
+        assertEquals(0, "".validateLength())
 
-        // When
-        val result = input.validateLength()
+        assertEquals(0, null.validateLength())
 
-        // Then
-        assertEquals(0, result)
-    }
+        assertEquals(0, "  ".validateLength())
 
-    @Test
-    fun `test validateLength with null input`() {
-        // Given
-        val input: String? = null
-
-        // When
-        val result = input.validateLength()
-
-        // Then
-        assertEquals(0, result)
-    }
-
-    @Test
-    fun `test validateLength with input containing only whitespace`() {
-        // Given
-        val input = "   "
-
-        // When
-        val result = input.validateLength()
-
-        // Then
-        assertEquals(0, result)
+        assertEquals(13, ("Hello, World!" as CharSequence).validateLength())
     }
 
     @Test
     fun `test isValidString with valid non-null non-empty input`() {
-        // Given
-        val input = "Hello"
 
-        // When
-        val result = input.isValidString()
+        //  Positive scenarios
+        assertTrue("Hello World".isValidString())
 
-        // Then
-        assertTrue(result)
+        assertTrue(("Hello World" as CharSequence).isValidString())
+
+        assertTrue("Hello World".isValidString { it.isValidString() })
+
+        assertTrue(("Hello World" as CharSequence).isValidString { it.isValidString() })
+
+        //  Negative scenarios
+        assertFalse("".isValidString())
+
+        assertFalse(null.isValidString())
+
+        assertFalse("   ".isValidString())
+
+        assertFalse("null".isValidString())
+
+        assertFalse("NuLL".isValidString())
+
     }
-
-    @Test
-    fun `test isValidString with valid non-null empty input`() {
-        // Given
-        val input: CharSequence = ""
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid null input`() {
-        // Given
-        val input: CharSequence? = null
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid input containing only whitespace`() {
-        // Given
-        val input: CharSequence = "   "
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with invalid input null`() {
-        // Given
-        val input: CharSequence = "null"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with invalid input NuLL`() {
-        // Given
-        val input: CharSequence = "NuLL"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertFalse(result)
-    }
-
-    @Test
-    fun `test isValidString with valid non-null non-empty inputString`() {
-        // Given
-        val input: CharSequence = "Hello World"
-
-        // When
-        val result = input.isValidString()
-
-        // Then
-        assertTrue(result)
-    }
-
 
     @Test
     fun `test convertToDollarFormat with valid input`() {
-        // Given
-        val input = "1234.56"
 
-        // When
-        val result = input.convertToDollarFormat()
+        assertEquals("$1,234.56", "1234.56".convertToDollarFormat())
 
-        // Then
-        assertEquals("$1,234.56", result)
+        assertEquals("$100.00", "100.00".convertToDollarFormat())
+
+        assertEquals("$0.00", "abc".convertToDollarFormat())
+
+        assertEquals("$0.00", "".convertToDollarFormat())
+
+        assertEquals("$0.00", "   ".convertToDollarFormat())
+
+        assertEquals("$0.00", null.convertToDollarFormat())
     }
 
     @Test
-    fun `test convertToDollarFormat with valid input and trailing zeros`() {
-        // Given
-        val input = "100.00"
+    fun `test getAmountFromDollarFormat with valid input`() {
 
-        // When
-        val result = input.convertToDollarFormat()
+        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.0)
 
-        // Then
-        assertEquals("$100.00", result)
+        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.0)
+
+        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.0)
+
+        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(), 0.0)
+
+        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.0)
+
+        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.0)
     }
 
     @Test
-    fun `test convertToDollarFormat with invalid input`() {
-        // Given
-        val input = "abc"
+    fun `test stringToDouble with valid double string`() {
 
-        // When
-        val result = input.convertToDollarFormat()
+        assertEquals(3.14, "3.14".stringToDouble(), 0.0)
 
-        // Then
-        assertEquals("$0.00", result)
-    }
+        assertEquals(0.0, "abc".stringToDouble(), 0.0)
 
-    @Test
-    fun `test convertToDollarFormat with empty input`() {
-        // Given
-        val input = ""
-
-        // When
-        val result = input.convertToDollarFormat()
-
-        // Then
-        assertEquals("$0.00", result)
-    }
-
-    @Test
-    fun `test convertToDollarFormat with input containing only whitespace`() {
-        // Given
-        val input = "   "
-
-        // When
-        val result = input.convertToDollarFormat()
-
-        // Then
-        assertEquals("$0.00", result)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with valid input`() {
-        // Given
-        val input = "$1,234.56"
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(1234.56, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with valid input and trailing zeros`() {
-        // Given
-        val input = "$100.00"
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(100.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with invalid input`() {
-        // Given
-        val input = "abc"
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with null input`() {
-        // Given
-        val input: String? = null
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with empty input`() {
-        // Given
-        val input = ""
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
-    }
-
-    @Test
-    fun `test getAmountValueFromDollarFormat with input containing only whitespace`() {
-        // Given
-        val input = "   "
-
-        // When
-        val result = input.getAmountValueFromDollarFormat()
-
-        // Then
-        assertEquals(0.0, result, 0.01)
+        assertEquals(0.0, null.stringToDouble(), 0.0)
     }
 
     @Test
     fun `test stringToFloat with valid float string`() {
-        // Given
-        val input = "3.14"
 
-        // When
-        val result = input.stringToFloat()
+        assertEquals(3.14f, "3.14".stringToFloat())
 
-        // Then
-        assertEquals(3.14f, result)
+        assertEquals(0f, "abc".stringToFloat())
+
+        assertEquals(0f, null.stringToFloat())
     }
 
     @Test
-    fun `test stringToFloat with invalid float string`() {
-        // Given
-        val input = "abc"
+    fun `test stringToLong with valid long string`() {
 
-        // When
-        val result = input.stringToFloat()
+        assertEquals(42, "42".stringToLong())
 
-        // Then
-        assertEquals(0f, result)
-    }
+        assertEquals(0, "abc".stringToLong())
 
-    @Test
-    fun `test stringToFloat with null input`() {
-        // Given
-        val input: String? = null
+        assertEquals(0, null.stringToLong())
 
-        // When
-        val result = input.stringToFloat()
-
-        // Then
-        assertEquals(0f, result)
-    }
-
-    @Test
-    fun `test stringToFloat with empty string`() {
-        // Given
-        val input = ""
-
-        // When
-        val result = input.stringToFloat()
-
-        // Then
-        assertEquals(0f, result)
+        assertEquals(0, "".stringToLong())
     }
 
     @Test
     fun `test stringToInt with valid integer string`() {
-        // Given
-        val input = "42"
 
-        // When
-        val result = input.stringToInt()
+        assertEquals(42, "42".stringToInt())
 
-        // Then
-        assertEquals(42, result)
+        assertEquals(0, "abc".stringToInt())
+
+        assertEquals(0, null.stringToInt())
+
+        assertEquals(0, "".stringToInt())
     }
-
-    @Test
-    fun `test stringToInt with invalid integer string`() {
-        // Given
-        val input = "abc"
-
-        // When
-        val result = input.stringToInt()
-
-        // Then
-        assertEquals(0, result)
-    }
-
-    @Test
-    fun `test stringToInt with null input`() {
-        // Given
-        val input: String? = null
-
-        // When
-        val result = input.stringToInt()
-
-        // Then
-        assertEquals(0, result)
-    }
-
-    @Test
-    fun `test stringToInt with empty string`() {
-        // Given
-        val input = ""
-
-        // When
-        val result = input.stringToInt()
-
-        // Then
-        assertEquals(0, result)
-    }
-
-
 }

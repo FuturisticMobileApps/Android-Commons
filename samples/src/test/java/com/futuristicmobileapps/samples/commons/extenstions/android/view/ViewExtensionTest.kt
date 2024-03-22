@@ -1,4 +1,4 @@
-package com.futuristicmobileapps.samples
+package com.futuristicmobileapps.samples.commons.extenstions.android.view
 
 import android.content.Context
 import android.content.res.Resources
