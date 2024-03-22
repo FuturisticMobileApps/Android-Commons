@@ -13,6 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,16 +37,16 @@ android {
 
 dependencies {
     implementation(project(":commons"))
-    implementation(libs.androidx.test.core.ktx)
+    implementation(libs.core.ktx)
+
+    testImplementation ("org.mockito:mockito-core:3.12.4")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     testImplementation ("org.mockito:mockito-core:3.12.4")
-//    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
     androidTestImplementation ("org.mockito:mockito-android:3.12.4")
-
 
 
 }

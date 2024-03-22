@@ -19,7 +19,7 @@ class ContextExtKtTest {
         assertEquals("Android-Commons", context.getStringResources(R.string.app_name))
 
         // Test with in-valid Id
-//        assertEquals("", context.getStringResources(0))
+        assertEquals("", context.getStringResources(0))
 
         // Test with null Id
         assertEquals("", context.getStringResources(null))
