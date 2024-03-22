@@ -2,6 +2,7 @@ package com.futuristicmobileapps.samples.commons.extenstions.android.util
 
 import android.content.Context
 import android.content.res.Resources
+import android.widget.TextView
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -11,6 +12,8 @@ import org.mockito.Mockito.`when`
 
 
 class ContextExtTest {
+
+    private val textView = mock(TextView::class.java)
 
     private val context: Context = mock(Context::class.java)
     private val resources: Resources = mock(Resources::class.java)
@@ -24,6 +27,8 @@ class ContextExtTest {
 
     @Test
     fun getStringResourcesTest() {
+
+        `when`(textView.text).thenReturn("hii")
 
         // Test with valid Id
         assertEquals("Hello", context.getStringResources(101))

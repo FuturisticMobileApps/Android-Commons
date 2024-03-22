@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.android.view.enableView
+import com.futuristicmobilieapps.commons.extensions.kotlin.convertToEIN
+import com.futuristicmobilieapps.commons.extensions.kotlin.convertToUsPhoneNumber
 import com.google.android.material.textfield.TextInputLayout
 
 class SampleActivity : AppCompatActivity() {
@@ -19,8 +22,13 @@ class SampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sample_activity)
-//        val name = getStringResources(0)
-//        Log.i("Name", "onCreate: name is $name")
+
+        val etPhone = findViewById<EditText>(R.id.etPhone)
+
+        etPhone.convertToEIN()
+
+    //        val name = getStringResources(0)
+    //        Log.i("Name", "onCreate: name is $name")
     }
 }
 
