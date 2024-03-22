@@ -1,12 +1,14 @@
 package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
-import com.futuristicmobilieapps.androidcommons.validateString
 import com.futuristicmobilieapps.commons.extensions.kotlin.convertToDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.getAmountFromDollarFormat
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToDouble
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
+import com.futuristicmobilieapps.commons.extensions.kotlin.stringToLong
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateLength
+import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -38,13 +40,23 @@ class StringExtTest {
         assertEquals(0, null.validateLength())
 
         assertEquals(0, "  ".validateLength())
+
+        assertEquals(13, ("Hello, World!" as CharSequence).validateLength())
     }
 
     @Test
     fun `test isValidString with valid non-null non-empty input`() {
 
-        assertTrue("Hello".isValidString())
+        //  Positive scenarios
+        assertTrue("Hello World".isValidString())
 
+        assertTrue(("Hello World" as CharSequence).isValidString())
+
+        assertTrue("Hello World".isValidString { it.isValidString() })
+
+        assertTrue(("Hello World" as CharSequence).isValidString { it.isValidString() })
+
+        //  Negative scenarios
         assertFalse("".isValidString())
 
         assertFalse(null.isValidString())
@@ -55,7 +67,6 @@ class StringExtTest {
 
         assertFalse("NuLL".isValidString())
 
-        assertTrue("Hello World".isValidString())
     }
 
     @Test
@@ -75,19 +86,29 @@ class StringExtTest {
     }
 
     @Test
-    fun `test getAmountValueFromDollarFormat with valid input`() {
+    fun `test getAmountFromDollarFormat with valid input`() {
 
-        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.01)
+        assertEquals(1234.56, "$1,234.56".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.01)
+        assertEquals(100.0, "$100.00".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.00)
+        assertEquals(0.0, null.getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(),0.0)
+        assertEquals(0.0, "twenty thousand dollars $&*(".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.01)
+        assertEquals(0.0, "".getAmountFromDollarFormat(), 0.0)
 
-        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.01)
+        assertEquals(0.0, "   ".getAmountFromDollarFormat(), 0.0)
+    }
+
+    @Test
+    fun `test stringToDouble with valid double string`() {
+
+        assertEquals(3.14, "3.14".stringToDouble(), 0.0)
+
+        assertEquals(0.0, "abc".stringToDouble(), 0.0)
+
+        assertEquals(0.0, null.stringToDouble(), 0.0)
     }
 
     @Test
@@ -98,6 +119,18 @@ class StringExtTest {
         assertEquals(0f, "abc".stringToFloat())
 
         assertEquals(0f, null.stringToFloat())
+    }
+
+    @Test
+    fun `test stringToLong with valid long string`() {
+
+        assertEquals(42, "42".stringToLong())
+
+        assertEquals(0, "abc".stringToLong())
+
+        assertEquals(0, null.stringToLong())
+
+        assertEquals(0, "".stringToLong())
     }
 
     @Test
