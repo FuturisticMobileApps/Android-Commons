@@ -1,5 +1,7 @@
 package com.futuristicmobilieapps.commons.extensions.android.view
 
+import android.content.Context
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -10,8 +12,8 @@ import androidx.core.view.forEach
 import com.futuristicmobilieapps.commons.R
 import com.google.android.material.textfield.TextInputLayout
 
-fun View.visible() {
-    this.visibility = View.VISIBLE
+fun View?.visible() {
+    this?.visibility = View.VISIBLE
 }
 
 fun View?.invisible() {
@@ -112,3 +114,20 @@ fun CheckBox.unCheck() {
     isChecked = false
 }
 
+fun View.setOnClickListeners(onClickListeners: ((View) -> Unit)) {
+
+    var lastClickTime: Long = 0
+
+    setOnClickListener {
+
+        if (SystemClock.elapsedRealtime() - lastClickTime > 2000) {
+
+            lastClickTime = SystemClock.elapsedRealtime()
+
+            onClickListeners.invoke(it)
+
+        }
+
+    }
+
+}

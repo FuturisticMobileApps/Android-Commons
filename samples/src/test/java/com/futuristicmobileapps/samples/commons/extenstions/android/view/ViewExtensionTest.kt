@@ -1,5 +1,7 @@
 package com.futuristicmobileapps.samples.commons.extenstions.android.view
 
+import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -8,6 +10,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.futuristicmobilieapps.commons.R
 import com.futuristicmobilieapps.commons.extensions.android.view.check
 import com.futuristicmobilieapps.commons.extensions.android.view.disableAllChildViews
 import com.futuristicmobilieapps.commons.extensions.android.view.disableAllViews
@@ -16,14 +20,20 @@ import com.futuristicmobilieapps.commons.extensions.android.view.enableView
 import com.futuristicmobilieapps.commons.extensions.android.view.gone
 import com.futuristicmobilieapps.commons.extensions.android.view.invisible
 import com.futuristicmobilieapps.commons.extensions.android.view.isViewGroup
+import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
+import com.futuristicmobilieapps.commons.extensions.android.view.textForTextView
 import com.futuristicmobilieapps.commons.extensions.android.view.unCheck
 import com.futuristicmobilieapps.commons.extensions.android.view.visible
 import com.futuristicmobilieapps.commons.extensions.android.view.visibleAndCheck
 import com.google.android.material.textfield.TextInputLayout
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
+import org.w3c.dom.Text
 
 
 class ViewExtensionTest {
@@ -232,6 +242,110 @@ class ViewExtensionTest {
         verify(radioBtn).isEnabled = false
         verify(checkbox).isEnabled = false
         verify(textView).isEnabled = true
+    }
+
+
+    // enableView() with textinputLayout passed as parameter
+    @Test
+    fun testEnableView() {
+        // Mock a View and TextInputLayout
+        val view = mock(View::class.java)
+        val resources = mock(Resources::class.java)
+        val textInputLayout = mock(TextInputLayout::class.java)
+        val context = mock(Context::class.java)
+        val transparentColor = R.color.transparent
+
+
+        // Given
+        `when`(textInputLayout.context).thenReturn(context)
+        `when`(textInputLayout.context.resources).thenReturn(resources)
+        `when`(ContextCompat.getColor(context, transparentColor)).thenReturn(transparentColor)
+        `when`(textInputLayout.boxBackgroundColor).thenReturn(transparentColor)
+//        `when`((textInputLayout.boxBackgroundColor as ColorDrawable).color).thenReturn(Color.TRANSPARENT)
+
+        // Call the extension function
+        view.enableView(textInputLayout)
+
+        // Verify isEnabled property is set to true
+        verify(view).isEnabled = true
+
+        // Verify background color is set correctly
+        verify(textInputLayout).boxBackgroundColor = transparentColor
+    }
+
+    @Test
+    fun testDisableView() {
+
+        val view = mock(View::class.java)
+        val resources = mock(Resources::class.java)
+        val textInputLayout = mock(TextInputLayout::class.java)
+        val context = mock(Context::class.java)
+        val disabledColor = R.color.disabled_color
+
+
+        // Given
+        `when`(textInputLayout.context).thenReturn(context)
+        `when`(textInputLayout.context.resources).thenReturn(resources)
+        `when`(ContextCompat.getColor(context, disabledColor)).thenReturn(disabledColor)
+        `when`(textInputLayout.boxBackgroundColor).thenReturn(disabledColor)
+
+
+        // Call the extension function
+        view.disableView(textInputLayout)
+
+        // Verify isEnabled property is set to true
+        verify(view).isEnabled = false
+
+
+        //verify the boxBackground of TextInputLayout
+        verify(textInputLayout).boxBackgroundColor = disabledColor
+
+    }
+
+    @Test
+    fun testSetOnClickListeners() {
+        // mock view
+        val view = mock(View::class.java)
+
+        //define lambda scope of the clicklistener to do nothing but only to execute
+        val onClickListeners: (View) -> Unit = {
+
+        }
+
+        // Create an instance of the extension function
+        view.setOnClickListeners(onClickListeners)
+
+        // Simulate two consecutive clicks
+        view.performClick() // First click
+        assertFalse(view.hasOnClickListeners()) // Check if click listener is set
+
+        // Advance the clock by 1000 milliseconds
+        Thread.sleep(1000)
+
+        view.performClick() // Second click within 2000ms
+        assertFalse(view.hasOnClickListeners()) // Check if click listener is removed
+
+        // Advance the clock by another 2000 milliseconds
+        Thread.sleep(2000)
+
+        // Simulate another click after 2000ms
+        view.performClick()
+        assertFalse(view.hasOnClickListeners()) // Check if click listener is set again
+    }
+
+    @Test
+    fun testTextFromTextView(){
+        val textView = mock(TextView::class.java)
+        val expectedText = "Hello World"
+
+        textView.text = "Hello"
+
+        `when`(textView.text).thenReturn("jello")
+        // When
+        textView.textForTextView
+
+        // Then
+        verify(textView).text = expectedText
     }
 
 
