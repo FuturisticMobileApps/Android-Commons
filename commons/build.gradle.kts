@@ -6,6 +6,10 @@ plugins {
 android {
     namespace = "com.futuristicmobilieapps.commons"
     compileSdk = 34
+
+    defaultConfig{
+        minSdk = 21
+    }
     val jvmVersion = "1.8"
 
     compileOptions {
