@@ -1,15 +1,13 @@
-package com.futuristicmobilieapps.commons.extensions.kotlin
+package com.futuristicmobilieapps.commons.extensions.android.fields
 
-import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import com.futuristicmobilieapps.commons.extensions.android.view.onTextChangedTextWatcher
-import com.google.android.material.textfield.TextInputEditText
+import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 
 fun TextView?.getTextFromTextView(): String =
     if (this?.text?.toString().isValidString()) this?.text.toString().validateString() else ""
-
 
 fun EditText.convertToUsPhoneNumber() {
 
@@ -17,20 +15,15 @@ fun EditText.convertToUsPhoneNumber() {
 
         val phone = getTextFromTextView().replace("\\W".toRegex(), "")
 
-        if (phone.isEmpty() || phone.length > 14) return@onTextChangedTextWatcher
-
         val formattedPhone = when (phone.length) {
 
-            3 -> String.format("(%s)", phone.substring(0, 3))
+            in 4..5 -> String.format("(%s) %s", phone.substring(0, 3),
 
-            6 -> String.format("(%s) %s", phone.substring(0, 3), phone.substring(3, 6))
+                phone.substring(3))
 
-            10 -> String.format(
-                "(%s) %s-%s",
-                phone.substring(0, 3),
-                phone.substring(3, 6),
-                phone.substring(6, 10)
-            )
+            in 7..9 -> String.format("(%s) %s-%s", phone.substring(0, 3),
+
+                phone.substring(3, 6), phone.substring(6))
 
             else -> return@onTextChangedTextWatcher
         }
@@ -42,13 +35,13 @@ fun EditText.convertToUsPhoneNumber() {
         setSelection(formattedPhone.length)
 
         addTextChangedListener(textWatcher)
-
     }
 }
 
+
 fun EditText.convertToEIN() {
 
-  onTextChangedTextWatcher { textWatcher->
+    onTextChangedTextWatcher { textWatcher->
 
             val input = text.toString().replace(Regex("[()-//s]"), "")
 
@@ -71,12 +64,11 @@ fun EditText.convertToEIN() {
        }
 }
 
-fun EditText.convertZipCode(textWatcher: TextWatcher) {
+fun EditText.convertZipCode() {
 
-    (this as? TextInputEditText)?.let { textInputEditText ->
-        textInputEditText.onTextChangedTextWatcher {
+    onTextChangedTextWatcher {textWatcher->
 
-            val input = textInputEditText.text.toString().replace(Regex("[()-//s]"), "")
+            val input = text.toString().replace(Regex("[()-//s]"), "")
 
             if (input.length > 10) return@onTextChangedTextWatcher
 
@@ -86,24 +78,34 @@ fun EditText.convertZipCode(textWatcher: TextWatcher) {
                 "${result.groupValues[1]}-${result.groupValues[2]}"
             }
 
-            textInputEditText.apply {
+           removeTextChangedListener(textWatcher)
 
-                removeTextChangedListener(textWatcher)
+           setText(formattedNumber)
 
-                setText(formattedNumber)
+           setSelection(formattedNumber.length)
 
-                setSelection(formattedNumber.length)
+           addTextChangedListener(textWatcher)
 
-                addTextChangedListener(textWatcher)
-            }
-        }
-    }
+     }
 }
 
+fun EditText.ssnMasking() {
 
+    onTextChangedTextWatcher { textWatcher ->
 
+        val input = text.toString().replace(Regex("[()-//s]"), "")
 
+        val formattedNumber = input.replace(Regex("(\\d{3})(\\d{2})(\\d{4})"), "$1-$2-$3")
 
+        removeTextChangedListener(textWatcher)
+
+        setText(formattedNumber)
+
+        setSelection(formattedNumber.length)
+
+        addTextChangedListener(textWatcher)
+    }
+}
 
 
 

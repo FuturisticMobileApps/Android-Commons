@@ -1,7 +1,6 @@
 package com.futuristicmobilieapps.androidcommons
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -9,12 +8,12 @@ import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
-import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.android.view.enableView
-import com.futuristicmobilieapps.commons.extensions.kotlin.convertToEIN
-import com.futuristicmobilieapps.commons.extensions.kotlin.convertToUsPhoneNumber
+import com.futuristicmobilieapps.commons.extensions.android.fields.convertToEIN
+import com.futuristicmobilieapps.commons.extensions.android.fields.convertToUsPhoneNumber
+import com.futuristicmobilieapps.commons.extensions.android.fields.convertZipCode
+import com.futuristicmobilieapps.commons.extensions.android.fields.ssnMasking
 import com.google.android.material.textfield.TextInputLayout
 
 class SampleActivity : AppCompatActivity() {
@@ -25,7 +24,17 @@ class SampleActivity : AppCompatActivity() {
 
         val etPhone = findViewById<EditText>(R.id.etPhone)
 
-        etPhone.convertToEIN()
+        val tvTest = findViewById<EditText>(R.id.tvTest)
+
+        val etEin = findViewById<EditText>(R.id.etEin)
+
+        val check = findViewById<EditText>(R.id.check)
+
+        etPhone.convertToUsPhoneNumber()
+
+        tvTest.convertZipCode()
+
+        etEin.ssnMasking()
 
     //        val name = getStringResources(0)
     //        Log.i("Name", "onCreate: name is $name")
