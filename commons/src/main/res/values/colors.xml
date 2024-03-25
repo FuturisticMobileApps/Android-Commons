@@ -3,4 +3,7 @@
 
     <color name="transparent">#00EEEEEE</color>
     <color name="disabled_color">#EFEFF4</color>
+    <color name="Black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="appTheme">#3364A2</color>
 </resources>
