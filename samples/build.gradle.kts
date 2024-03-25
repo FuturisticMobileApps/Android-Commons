@@ -37,7 +37,7 @@ android {
 
 dependencies {
     implementation(project(":commons"))
-    implementation(libs.core.ktx)
+    implementation(libs.androidx.test.core.ktx)
 
     testImplementation ("org.mockito:mockito-core:3.12.4")
 
