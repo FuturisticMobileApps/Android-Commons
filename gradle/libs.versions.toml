@@ -10,11 +10,16 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 monitor = "1.6.1"
 coreKtxVersion = "1.5.0"
+retrofit = "2.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+#Retrofit
+retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit2-converter-json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version = "5.0.0-alpha.6" }
 
 #Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -28,4 +33,7 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+[bundles]
+retrofit = ["retrofit2-retrofit","retrofit2-converter-json","okhttp3-logging-interceptor"]
 
