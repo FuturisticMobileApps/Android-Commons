@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
 const val oneDayInMs = 86400000
 
 val e_dd_mmm_yyy_hh_mm_ss_z = SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
