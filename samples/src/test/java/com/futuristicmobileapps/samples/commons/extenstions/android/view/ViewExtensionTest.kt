@@ -26,14 +26,11 @@ import com.futuristicmobilieapps.commons.extensions.android.view.unCheck
 import com.futuristicmobilieapps.commons.extensions.android.view.visible
 import com.futuristicmobilieapps.commons.extensions.android.view.visibleAndCheck
 import com.google.android.material.textfield.TextInputLayout
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import org.w3c.dom.Text
 
 
 class ViewExtensionTest {
@@ -159,7 +156,7 @@ class ViewExtensionTest {
 
 
     @Test
-    fun `testExtensions_disableChildViews`() {
+    fun `testExtensions disableChildViews`() {
 
         val view: View = mock(View::class.java)
 

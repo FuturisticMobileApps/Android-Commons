@@ -1,4 +1,4 @@
-package com.futuristicmobilieapps.commons.extensions.android.fields
+package com.futuristicmobilieapps.commons.extensions.kotlin
 
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 import java.text.SimpleDateFormat
