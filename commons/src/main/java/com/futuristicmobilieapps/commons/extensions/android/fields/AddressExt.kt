@@ -17,13 +17,14 @@ fun EditText.convertToUsPhoneNumber() {
 
         val formattedPhone = when (phone.length) {
 
-            in 4..5 -> String.format("(%s) %s", phone.substring(0, 3),
+            in 4..5 -> String.format("(%s) %s", phone.substring(0, 3), phone.substring(3))
 
-                phone.substring(3))
-
-            in 7..9 -> String.format("(%s) %s-%s", phone.substring(0, 3),
-
-                phone.substring(3, 6), phone.substring(6))
+            in 7..9 -> String.format(
+                "(%s) %s-%s",
+                phone.substring(0, 3),
+                phone.substring(3, 6),
+                phone.substring(6)
+            )
 
             else -> return@onTextChangedTextWatcher
         }
@@ -41,52 +42,52 @@ fun EditText.convertToUsPhoneNumber() {
 
 fun EditText.convertToEIN() {
 
-    onTextChangedTextWatcher { textWatcher->
+    onTextChangedTextWatcher { textWatcher ->
 
-            val input = text.toString().replace(Regex("[()-//s]"), "")
+        val input = text.toString().replace(Regex("[()-//s]"), "")
 
-            if (input.isEmpty()) return@onTextChangedTextWatcher
+        if (input.isEmpty()) return@onTextChangedTextWatcher
 
-            val regex = "^\\(?([0-9]{2})\\)?[-.]?([0-9]{7})$".toRegex()
+        val regex = "^\\(?([0-9]{2})\\)?[-.]?([0-9]{7})$".toRegex()
 
-            val formattedNumber = input.replace(regex) { result ->
+        val formattedNumber = input.replace(regex) { result ->
 
-                "${result.groupValues[1]}-${result.groupValues[2]}"
-            }
+            "${result.groupValues[1]}-${result.groupValues[2]}"
+        }
 
-            removeTextChangedListener(textWatcher)
+        removeTextChangedListener(textWatcher)
 
-            setText(formattedNumber)
+        setText(formattedNumber)
 
-            setSelection(formattedNumber.length)
+        setSelection(formattedNumber.length)
 
-            addTextChangedListener(textWatcher)
-       }
+        addTextChangedListener(textWatcher)
+    }
 }
 
 fun EditText.convertZipCode() {
 
-    onTextChangedTextWatcher {textWatcher->
+    onTextChangedTextWatcher { textWatcher ->
 
-            val input = text.toString().replace(Regex("[()-//s]"), "")
+        val input = text.toString().replace(Regex("[()-//s]"), "")
 
-            if (input.length > 10) return@onTextChangedTextWatcher
+        if (input.length > 10) return@onTextChangedTextWatcher
 
-            val regex = "^\\(?([0-9]{5})\\)?[-.\\s]?([0-9]{4})$".toRegex()
+        val regex = "^\\(?([0-9]{5})\\)?[-.\\s]?([0-9]{4})$".toRegex()
 
-            val formattedNumber = input.replace(regex) { result ->
-                "${result.groupValues[1]}-${result.groupValues[2]}"
-            }
+        val formattedNumber = input.replace(regex) { result ->
+            "${result.groupValues[1]}-${result.groupValues[2]}"
+        }
 
-           removeTextChangedListener(textWatcher)
+        removeTextChangedListener(textWatcher)
 
-           setText(formattedNumber)
+        setText(formattedNumber)
 
-           setSelection(formattedNumber.length)
+        setSelection(formattedNumber.length)
 
-           addTextChangedListener(textWatcher)
+        addTextChangedListener(textWatcher)
 
-     }
+    }
 }
 
 fun EditText.ssnMasking() {

@@ -159,7 +159,7 @@ class ViewExtensionTest {
 
 
     @Test
-    fun `testExtensions_disableChildViews`() {
+    fun `testExtensions disableChildViews`() {
 
         val view: View = mock(View::class.java)
 

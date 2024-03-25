@@ -1,10 +1,10 @@
-package com.futuristicmobileapps.samples.commons.extenstions.android
+package com.futuristicmobileapps.samples.commons.extenstions.kotlin
 
-import com.futuristicmobilieapps.commons.extensions.android.fields.getCurrentDate
-import com.futuristicmobilieapps.commons.extensions.android.fields.getCurrentMonth
-import com.futuristicmobilieapps.commons.extensions.android.fields.getCurrentTimeInMS
-import com.futuristicmobilieapps.commons.extensions.android.fields.getCurrentYear
-import com.futuristicmobilieapps.commons.extensions.android.fields.getDateFromMillis
+import com.futuristicmobilieapps.commons.extensions.kotlin.getCurrentDate
+import com.futuristicmobilieapps.commons.extensions.kotlin.getCurrentMonth
+import com.futuristicmobilieapps.commons.extensions.kotlin.getCurrentTimeInMS
+import com.futuristicmobilieapps.commons.extensions.kotlin.getCurrentYear
+import com.futuristicmobilieapps.commons.extensions.kotlin.getDateFromMillis
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 import java.text.SimpleDateFormat
