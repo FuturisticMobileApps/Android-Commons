@@ -5,7 +5,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.futuristicmobilieapps.androidcommons.R
 import com.futuristicmobilieapps.androidcommons.SampleActivity
-import com.futuristicmobilieapps.commons.extensions.android.view.getTextFromTextView
+import com.futuristicmobilieapps.commons.extensions.android.fields.getTextFromTextView
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
