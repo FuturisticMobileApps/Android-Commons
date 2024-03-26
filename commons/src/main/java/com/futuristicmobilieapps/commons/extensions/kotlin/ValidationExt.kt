@@ -1,5 +1,11 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
+import android.widget.EditText
+import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
+import com.futuristicmobilieapps.commons.extensions.android.view.getTextFromTextView
+import com.futuristicmobilieapps.commons.extensions.android.view.isValidText
+import com.google.android.material.textfield.TextInputLayout
+
 fun String?.validateText() = if (this.isValidString()) this!!.validateString() else ""
 
 fun String.isValidName(): Boolean {
@@ -63,6 +69,101 @@ fun String?.isValidZipCode(): Boolean {
 
     return this?.matches(regex.toRegex()) ?: false
 }
+
+fun isSignInOrSignUpValidate(
+
+    emailEditText: EditText? = null,
+    passwordEditText: EditText? = null,
+    phoneEditText: EditText? = null,
+    nameEditText: EditText? = null,
+    zipCodeEditText: EditText? = null,
+    emailInputLayout: TextInputLayout? = null,
+    passwordInputLayout: TextInputLayout? = null,
+    phoneInputLayout: TextInputLayout? = null,
+    nameInputLayout: TextInputLayout? = null,
+    zipCodeInputLayout: TextInputLayout? = null,
+
+): Boolean{
+
+    var isValid = true
+
+
+    emailEditText.let {
+        when {
+            !it.isValidText() -> {
+                it?.error = "Email Address Required"
+                isValid = false
+            }
+            !it.getTextFromTextView().isValidEmail() -> {
+                emailInputLayout?.error = "Enter Valid Email"
+                isValid = false
+            }
+        }
+    }
+
+
+    passwordEditText.let {
+        when {
+            !it.isValidText() -> {
+                it?.error = "Password Required"
+                isValid = false
+            }
+            !it.getTextFromTextView().isValidPassword() -> {
+                passwordInputLayout?.error = "Enter Valid Password"
+                isValid = false
+            }
+        }
+    }
+
+
+    nameEditText?.let {
+        when {
+            !it.isValidText() -> {
+                it.error = "Name Required"
+                isValid = false
+            }
+            !it.getTextFromTextView().isValidName() -> {
+                nameInputLayout?.error = "Enter Valid Name"
+                isValid = false
+            }
+
+        }
+    }
+
+
+    phoneEditText?.let {
+        when {
+            !it.isValidText() -> {
+                it.error = "Phone Number Required"
+                isValid = false
+            }
+            !it.getTextFromTextView().isValidPhone() -> {
+                phoneInputLayout?.error = "Enter Valid Phone Number"
+                isValid = false
+            }
+
+        }
+    }
+
+
+    zipCodeEditText?.let {
+        when {
+            !it.isValidText() -> {
+                it.error = "Zip Code Required"
+                isValid = false
+            }
+            !it.getTextFromTextView().isValidZipCode() -> {
+                zipCodeInputLayout?.error = "Enter Valid Zip Code"
+                isValid = false
+            }
+
+        }
+    }
+
+    return isValid
+}
+
+
 
 
 
