@@ -14,14 +14,14 @@ var TextView?.textForTextView: String?
         this?.text = value.validateString()
     }
 
-fun TextView?.setTextForTextView(input: String? = "") {
+/*fun TextView?.setTextForTextView(input: String? = "") {
     this?.text = input.validateString()
 
     this.textForTextView
 }
 
 fun TextView?.getTextFromTextView(): String =
-    if (this?.text?.toString().isValidString()) this?.text.toString().validateString() else ""
+    if (this?.text?.toString().isValidString()) this?.text.toString().validateString() else ""*/
 
 fun TextView?.clearText() {
     textForTextView = ""

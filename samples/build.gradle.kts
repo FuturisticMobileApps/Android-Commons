@@ -45,6 +45,6 @@ dependencies {
 
     testImplementation ("org.mockito:mockito-core:3.12.4")
     androidTestImplementation ("org.mockito:mockito-android:3.12.4")
-
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 
 }
