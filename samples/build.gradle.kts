@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation(project(":commons"))
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.test.core.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
@@ -46,5 +47,7 @@ dependencies {
     testImplementation ("org.mockito:mockito-core:3.12.4")
     androidTestImplementation ("org.mockito:mockito-android:3.12.4")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation ("org.robolectric:robolectric:4.5.1")
+
 
 }

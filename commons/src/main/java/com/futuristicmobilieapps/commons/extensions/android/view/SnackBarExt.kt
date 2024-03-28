@@ -142,12 +142,12 @@ fun View.make(
 
         setOnClickListener { snackBar.dismiss() }
 
-        setBackgroundColor(ContextCompat.getColor(context, R.color.Black))
+        setBackgroundColor(ContextCompat.getColor(context, androidx.appcompat.R.color.primary_dark_material_dark))
     }
 
-    snackBar.setTextColor(ContextCompat.getColor(context, R.color.white))
+    snackBar.setTextColor(ContextCompat.getColor(context, com.google.android.material.R.color.primary_material_light))
 
-    snackBar.setActionTextColor(ContextCompat.getColor(context, R.color.appTheme))
+    snackBar.setActionTextColor(ContextCompat.getColor(context, androidx.appcompat.R.color.primary_material_light))
 
     snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Android-Commons</string>
+    <string name="unauthorized_user_locked_text">Your account has been locked since you are not allowed to proceed with <b>Android Biz</b>. For more information, please contact our support team.</string>
+    <string name="okay_txt">okay</string>
+    <string name="cancel">cancel</string>
 </resources>
