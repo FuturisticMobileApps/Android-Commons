@@ -8,6 +8,7 @@ import com.futuristicmobilieapps.commons.extensions.android.fields.convertToUsPh
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.android.view.setclicklistener
 import com.futuristicmobilieapps.commons.extensions.kotlin.CommonAlertDialog
+import com.futuristicmobilieapps.commons.extensions.kotlin.popupDisplay
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -74,7 +75,7 @@ class SampleActivity : AppCompatActivity() {
 
        }
 
-        tvTest.convertToUsPhoneNumber()
+        tvTest.popupDisplay(this,"check")
     }
 }
 
