@@ -1,6 +1,5 @@
 package com.futuristicmobilieapps.commons.extensions.android.view
 
-import android.content.Context
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import com.futuristicmobilieapps.commons.R
+import com.futuristicmobilieapps.commons.extensions.android.util.tryCatch
 import com.google.android.material.textfield.TextInputLayout
 
 fun View?.visible() {
@@ -37,9 +37,7 @@ fun View?.disableView(textInputLayout: TextInputLayout? = null) {
 
     textInputLayout?.apply {
         isEnabled = false
-
         boxBackgroundColor = ContextCompat.getColor(context, R.color.disabled_color)
-
     }
 }
 
@@ -48,7 +46,6 @@ fun View?.enableView(textInputLayout: TextInputLayout? = null) {
 
     textInputLayout?.apply {
         isEnabled = true
-
         boxBackgroundColor = ContextCompat.getColor(context,R.color.transparent)
     }
 }
@@ -63,7 +60,8 @@ fun View?.disableAllChildViews() {
 }
 
 fun View?.disableAllViews() {
-    try {
+
+    tryCatch {
 
         when (this) {
 
@@ -84,13 +82,26 @@ fun View?.disableAllViews() {
             else -> disableView()
 
         }
-    } catch (e: Exception) {
-        e.printStackTrace()
     }
 }
 
 fun View.isViewGroup(): Boolean {
     return this is ViewGroup
+}
+
+fun View.setOnClickListeners(onClickListeners: ((View) -> Unit)) {
+
+    var lastClickTime: Long = 0
+
+    setOnClickListener {
+
+        if (SystemClock.elapsedRealtime() - lastClickTime > 2000) {
+
+            lastClickTime = SystemClock.elapsedRealtime()
+
+            onClickListeners.invoke(it)
+        }
+    }
 }
 
 fun RadioButton.check() {
@@ -112,22 +123,4 @@ fun CheckBox.check() {
 
 fun CheckBox.unCheck() {
     isChecked = false
-}
-
-fun View.setOnClickListeners(onClickListeners: ((View) -> Unit)) {
-
-    var lastClickTime: Long = 0
-
-    setOnClickListener {
-
-        if (SystemClock.elapsedRealtime() - lastClickTime > 2000) {
-
-            lastClickTime = SystemClock.elapsedRealtime()
-
-            onClickListeners.invoke(it)
-
-        }
-
-    }
-
 }

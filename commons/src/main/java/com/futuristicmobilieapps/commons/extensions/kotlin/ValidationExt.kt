@@ -2,10 +2,10 @@ package com.futuristicmobilieapps.commons.extensions.kotlin
 
 import android.widget.EditText
 import com.futuristicmobilieapps.commons.extensions.android.fields.getTextFromTextView
-import com.futuristicmobilieapps.commons.extensions.android.view.isValidText
+import com.futuristicmobilieapps.commons.extensions.android.view.isValidString
 import com.google.android.material.textfield.TextInputLayout
 
-fun String?.validateText() = if (this.isValidString()) this!!.validateString() else ""
+fun String?.validateText() = if (this.isValidString()) this.validateString() else ""
 
 fun String.isValidName(): Boolean {
 
@@ -56,7 +56,6 @@ fun String?.isCorrectEIN(): Boolean {
 }
 
 fun String?.isValidEmail(): Boolean {
-
     return this != null && Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\$").
     matches(this)
 }
@@ -68,6 +67,10 @@ fun String?.isValidZipCode(): Boolean {
 
     return this?.matches(regex.toRegex()) ?: false
 }
+
+
+
+
 
 fun isSignInOrSignUpValidate(
     emailEditText: EditText? = null,
@@ -93,7 +96,7 @@ fun isSignInOrSignUpValidate(
     if (validateEmail) {
         emailEditText?.let {
             when {
-                !it.isValidText() -> {
+                !it.isValidString() -> {
                     it.error = "Email Address Required"
                     isValid = false
                 }
@@ -109,7 +112,7 @@ fun isSignInOrSignUpValidate(
     if (validatePassword) {
         passwordEditText?.let {
             when {
-                !it.isValidText() -> {
+                !it.isValidString() -> {
                     it.error = "Password Required"
                     isValid = false
                 }
@@ -125,7 +128,7 @@ fun isSignInOrSignUpValidate(
     if (validateName) {
         nameEditText?.let {
             when {
-                !it.isValidText() -> {
+                !it.isValidString() -> {
                     it.error = "Name Required"
                     isValid = false
                 }
@@ -141,7 +144,7 @@ fun isSignInOrSignUpValidate(
     if (validatePhone) {
         phoneEditText?.let {
             when {
-                !it.isValidText() -> {
+                !it.isValidString() -> {
                     it.error = "Phone Number Required"
                     isValid = false
                 }
@@ -157,7 +160,7 @@ fun isSignInOrSignUpValidate(
     if (validateZipCode) {
         zipCodeEditText?.let {
             when {
-                !it.isValidText() -> {
+                !it.isValidString() -> {
                     it.error = "Zip Code Required"
                     isValid = false
                 }

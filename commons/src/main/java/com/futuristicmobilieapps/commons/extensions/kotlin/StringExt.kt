@@ -1,5 +1,8 @@
 package com.futuristicmobilieapps.commons.extensions.kotlin
 
+import android.app.Dialog
+import androidx.fragment.app.Fragment
+import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.android.util.tryCatch
 import java.text.NumberFormat
 import java.util.Locale
@@ -41,6 +44,10 @@ fun String?.stringToFloat(): Float = this?.toFloatOrNull() ?: 0F
 fun String?.stringToLong(): Long = this?.toLongOrNull() ?: 0
 
 fun String?.stringToInt(): Int = this?.toIntOrNull() ?: 0
+
+
+fun Fragment.getStringResources(stringId: Int?): String = requireContext().getStringResources(stringId)
+fun Dialog.getStringResources(stringId: Int?): String = context.getStringResources(stringId)
 
 
 

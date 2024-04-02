@@ -7,56 +7,34 @@ import androidx.fragment.app.Fragment
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 
-const val LENGTH_SHORT = Toast.LENGTH_SHORT
+private const val LENGTH_SHORT = Toast.LENGTH_SHORT
+private const val LENGTH_LONG = Toast.LENGTH_LONG
 
-const val LENGTH_LONG = Toast.LENGTH_LONG
-
-fun Int.validateToastDuration() = if (this == LENGTH_SHORT || this == LENGTH_LONG)
-
-    this else Toast.LENGTH_SHORT
-
-
-fun Context.toast(resourcesId: Int, duration: Int = LENGTH_SHORT) {
-
-    val message = getStringResources(resourcesId)
-
-    if (message.isValidString()) toast(message, duration)
-
-}
+fun Int.validateToastDuration() =
+    if (this == LENGTH_SHORT || this == LENGTH_LONG) this else Toast.LENGTH_SHORT
 
 fun Fragment.toast(resourcesId: Int, duration: Int = LENGTH_SHORT) {
+    requireContext().toast(resourcesId, duration)
+}
 
-    val message = getStringResources(resourcesId)
-
-    if (message.isValidString()) toast(message, duration)
-
+fun Fragment.toast(message: String?, duration: Int = LENGTH_SHORT) {
+    requireContext().toast(message, duration)
 }
 
 fun Dialog.toast(resourcesId: Int, duration: Int = LENGTH_SHORT) {
+    context.toast(resourcesId, duration)
+}
 
-    val message = context.getStringResources(resourcesId)
+fun Dialog.toast(message: String?, duration: Int = LENGTH_SHORT) {
+    context.toast(message, duration)
+}
 
-    if (message.isValidString()) toast(message, duration)
-
+fun Context.toast(resourcesId: Int, duration: Int = LENGTH_SHORT) {
+    toast(getStringResources(resourcesId), duration)
 }
 
 fun Context.toast(message: String?, duration: Int = LENGTH_SHORT) {
-
-    if (message.isValidString()) Toast.makeText(this, message, duration.validateToastDuration()).show()
-
+    if (message.isValidString())
+        Toast.makeText(this, message, duration.validateToastDuration()).show()
 }
-
-fun Fragment.toast(message: String?, duration: Int = LENGTH_SHORT) =
-
-    requireContext().toast(message, duration.validateToastDuration())
-
-
-fun Dialog.toast(message: String?, duration: Int = LENGTH_SHORT) =
-
-    context.toast(message, duration.validateToastDuration())
-
-
-fun Fragment.getStringResources(stringId: Int?): String =
-
-    requireContext().getStringResources(stringId)
 
