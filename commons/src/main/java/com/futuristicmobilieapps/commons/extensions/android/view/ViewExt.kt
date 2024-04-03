@@ -1,8 +1,10 @@
 package com.futuristicmobilieapps.commons.extensions.android.view
 
+import android.content.Context
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.TextView
@@ -103,6 +105,15 @@ fun View.setOnClickListeners(onClickListeners: ((View) -> Unit)) {
         }
     }
 }
+
+
+fun View.hideSoftKeyboard() {
+    tryCatch {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(windowToken, 0)
+    }
+}
+
 
 fun RadioButton.check() {
     isChecked = true
