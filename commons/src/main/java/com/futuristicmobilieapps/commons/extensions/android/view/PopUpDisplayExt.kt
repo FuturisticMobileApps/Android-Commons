@@ -1,4 +1,4 @@
-package com.futuristicmobilieapps.commons.extensions.kotlin
+package com.futuristicmobilieapps.commons.extensions.android.view
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,40 +1,33 @@
-package com.spanmobiles.retrofit
+package com.spanmobiles.retrofit.api
 
-import com.sun.tools.javac.util.Context
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_CONNECTION_TIMEOUT
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_DEFAULT
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_HTTP_VERSION_NOT_SUPPORTED
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_INTERNAL_SERVER
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_NOT_AUTHORIZED
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_PAYLOAD_TOO_LARGE
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_RANGE_NOT_SATISFIABLE
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_SERVICE_UNAVAILABLE
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_TOO_MANY_REQUESTS
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_UNSUPPORTED_MEDIA_TYPE
+import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_UPGRADE_REQUIRED
+import com.spanmobiles.retrofit.api.NetworkResponse.STATUS_OK
 import retrofit2.Response
-import retrofit2.http.Headers
 
 
-class InternetService(private val context: Context) {
-    companion object {
-        const val ERROR_NO_CONNECTION = 101
-        const val ERROR_CONNECTION_TIMEOUT = 504
-        const val ERROR_INTERNAL_SERVER = 500
-        const val ERROR_TOO_MANY_REQUESTS = 429
-        const val ERROR_PAYLOAD_TOO_LARGE = 413
-        const val ERROR_UNSUPPORTED_MEDIA_TYPE = 415
-        const val ERROR_RANGE_NOT_SATISFIABLE = 416
-        const val ERROR_UPGRADE_REQUIRED = 426
-        const val ERROR_SERVICE_UNAVAILABLE = 503
-        const val ERROR_HTTP_VERSION_NOT_SUPPORTED = 505
-        const val ERROR_DEFAULT = 0
-        const val ERROR_NOT_AUTHORIZED = 401
-        const val STATUS_OK = 200
-    }
+class InternetService {
 
-    fun <T> dotNetworkCall(
+    fun <T> handleNetworkResponse(
         result: Response<T>?,
         onResponseFailure: ((Int, String?, T?) -> Unit)? = null,
-        onResponseSuccess: (T, String?, Headers) -> Unit
+        onResponseSuccess: (T, String?, okhttp3.Headers) -> Unit
     ) {
+
         when {
 
-            !context.isOnline() || result?.code() == ERROR_NO_CONNECTION -> {
-                onResponseFailure?.invoke(ERROR_NO_CONNECTION, "Please check your network connection!", null)
-            }
-
             result?.code() == ERROR_CONNECTION_TIMEOUT -> {
-                onResponseFailure?.invoke(ERROR_CONNECTION_TIMEOUT,
+                onResponseFailure?.invoke(
+                    ERROR_CONNECTION_TIMEOUT,
                     "Connection timeout, please check your connection and try again.",
                     null
                 )
@@ -129,10 +122,11 @@ class InternetService(private val context: Context) {
             }
 
             result.isSuccessful && result.code() == STATUS_OK && result.body() != null -> {
-
+                onResponseSuccess.invoke(result.body()!!, result.message(), result.headers())
             }
         }
     }
 }
+
 
 
