@@ -5,9 +5,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
-import com.futuristicmobilieapps.commons.extensions.android.view.setclicklistener
-import com.futuristicmobilieapps.commons.extensions.kotlin.CommonAlertDialog
-import com.futuristicmobilieapps.commons.extensions.kotlin.popupDisplay
+import com.futuristicmobilieapps.commons.extensions.android.view.popupDisplay
+import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
+import com.futuristicmobilieapps.views.dialogs.CommonAlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -49,7 +49,7 @@ class SampleActivity : AppCompatActivity() {
         btn = findViewById(R.id.btn)
 
 
-        btn.setclicklistener {
+        btn.setOnClickListeners {
 
 
             CommonAlertDialog(
@@ -72,11 +72,10 @@ class SampleActivity : AppCompatActivity() {
            Toast.makeText(this, "SignInFailed", Toast.LENGTH_SHORT).show()
             }*/
 
-       }
+        }
 
-        tvTest.popupDisplay(this,"check")
+        tvTest.popupDisplay(this, "check")
     }
-
 
 
 }
