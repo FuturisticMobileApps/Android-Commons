@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
-import com.futuristicmobilieapps.commons.extensions.android.view.setclicklistener
+import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
 import com.futuristicmobilieapps.commons.extensions.kotlin.CommonAlertDialog
 import com.futuristicmobilieapps.commons.extensions.kotlin.popupDisplay
 import com.google.android.material.textfield.TextInputEditText
@@ -49,7 +49,7 @@ class SampleActivity : AppCompatActivity() {
         btn = findViewById(R.id.btn)
 
 
-        btn.setclicklistener {
+        btn.setOnClickListeners {
 
 
             CommonAlertDialog(
