@@ -3,14 +3,11 @@ package com.futuristicmobilieapps.commons.extensions.android.view
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import com.futuristicmobilieapps.commons.extensions.android.fields.getTextFromTextView
-import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToFloat
 import com.futuristicmobilieapps.commons.extensions.kotlin.stringToInt
-import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 
 inline fun EditText.onTextChangedTextWatcher(
-    crossinline function: (tw:TextWatcher) -> Unit,
+    crossinline function: (tw: TextWatcher) -> Unit,
 ) {
     val textWatcher = object : TextWatcher {
 
@@ -34,15 +31,11 @@ inline fun EditText.onTextChangedTextWatcher(
     addTextChangedListener(textWatcher)
 }
 
-fun EditText?.isValidString(): Boolean = this?.text.toString().isValidString()
+fun EditText?.validateLength(): Int = textValue.length
 
-fun EditText?.validateString(): String = this?.text.toString().validateString()
+fun EditText.stringToFloat(): Float = textValue.stringToFloat()
 
-fun EditText?.validateLength(): Int = this?.validateString()?.length ?: 0
-
-fun EditText.stringToFloat(): Float = getTextFromTextView().stringToFloat()
-
-fun EditText.stringToInt(): Int = getTextFromTextView().stringToInt()
+fun EditText.stringToInt(): Int = textValue.stringToInt()
 
 
 

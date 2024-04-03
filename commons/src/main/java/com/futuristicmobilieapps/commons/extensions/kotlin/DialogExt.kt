@@ -23,6 +23,7 @@ fun AppCompatDialogFragment.onLoadDialog(
     isFullScreen: Boolean = true,
     isAutoCancel: Boolean = true
 ): Dialog {
+
     return Dialog(requireContext(), R.style.DialogFragmentStyle).apply {
 
         val widthHeight =
