@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.futuristicmobilieapps.commons.extensions.android.fields.convertToUsPhoneNumber
 import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
 import com.futuristicmobilieapps.commons.extensions.android.view.setclicklistener
 import com.futuristicmobilieapps.commons.extensions.kotlin.CommonAlertDialog
@@ -77,5 +76,8 @@ class SampleActivity : AppCompatActivity() {
 
         tvTest.popupDisplay(this,"check")
     }
+
+
+
 }
 
