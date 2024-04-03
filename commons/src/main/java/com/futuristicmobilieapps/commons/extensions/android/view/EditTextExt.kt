@@ -31,7 +31,7 @@ inline fun EditText.onTextChangedTextWatcher(
     addTextChangedListener(textWatcher)
 }
 
-fun EditText?.validateLength(): Int = textValue.length
+fun EditText?.validLength(): Int = textValue?.length ?: 0
 
 fun EditText.stringToFloat(): Float = textValue.stringToFloat()
 

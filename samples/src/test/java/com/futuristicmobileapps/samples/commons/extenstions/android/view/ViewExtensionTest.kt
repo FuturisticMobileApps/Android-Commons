@@ -21,7 +21,7 @@ import com.futuristicmobilieapps.commons.extensions.android.view.gone
 import com.futuristicmobilieapps.commons.extensions.android.view.invisible
 import com.futuristicmobilieapps.commons.extensions.android.view.isViewGroup
 import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
-import com.futuristicmobilieapps.commons.extensions.android.view.textForTextView
+import com.futuristicmobilieapps.commons.extensions.android.view.textValue
 import com.futuristicmobilieapps.commons.extensions.android.view.unCheck
 import com.futuristicmobilieapps.commons.extensions.android.view.visible
 import com.futuristicmobilieapps.commons.extensions.android.view.visibleAndCheck
@@ -331,7 +331,7 @@ class ViewExtensionTest {
     }
 
     @Test
-    fun testTextFromTextView(){
+    fun testTextFromTextView() {
         val textView = mock(TextView::class.java)
         val expectedText = "Hello World"
 
@@ -339,7 +339,7 @@ class ViewExtensionTest {
 
         `when`(textView.text).thenReturn("jello")
         // When
-        textView.textForTextView
+        textView.textValue
 
         // Then
         verify(textView).text = expectedText

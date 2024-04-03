@@ -1,69 +1,17 @@
-package com.futuristicmobilieapps.commons.extensions.kotlin
+package com.futuristicmobilieapps.views.dialogs
 
-import android.app.Dialog
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import com.futuristicmobilieapps.commons.R
 import com.futuristicmobilieapps.commons.databinding.CommonAlertDialogBinding
+import com.futuristicmobilieapps.commons.extensions.android.view.onLoadDialog
 import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
-
-fun AppCompatDialogFragment.onLoadDialog(
-    isFullScreen: Boolean = true,
-    isAutoCancel: Boolean = true
-): Dialog {
-
-    return Dialog(requireContext(), R.style.DialogFragmentStyle).apply {
-
-        val widthHeight =
-            if (isFullScreen) ViewGroup.LayoutParams.MATCH_PARENT else ViewGroup.LayoutParams.WRAP_CONTENT
-
-        setContentView(
-
-            LinearLayout(requireContext()).apply {
-
-                layoutParams = ViewGroup.LayoutParams(widthHeight, widthHeight)
-            }
-        )
-
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        window?.setLayout(widthHeight, widthHeight)
-
-        isCancelable = isAutoCancel
-
-        setCanceledOnTouchOutside(isAutoCancel)
-    }
-}
-
-fun AppCompatDialogFragment.showDialog(fragmentManager: FragmentManager, tag: String) {
-
-    val fragment = fragmentManager.findFragmentByTag(tag)
-
-    if (!fragment?.isAdded.validateBoolean()) show(fragmentManager, tag)
-}
-
-fun AppCompatDialogFragment.showDialog(activity: AppCompatActivity, tag: String) {
-
-    showDialog(activity.supportFragmentManager, tag)
-}
-
-fun AppCompatDialogFragment.showDialog(activity: FragmentActivity, tag: String) {
-
-    showDialog(activity.supportFragmentManager, tag)
-}
-
+import com.futuristicmobilieapps.commons.extensions.android.view.textValue
 
 class CommonAlertDialog(
     private val title: String,
@@ -103,18 +51,15 @@ class CommonAlertDialog(
 
     private fun setTextFields() {
 
-        bind.apply {
+        with(bind) {
 
-            if (positiveBtnTxt.isValidString())
+            positiveBtnTxt?.let { btnText -> positiveBtn.textValue = btnText }
 
-                positiveBtn.setTextForTextView(positiveBtnTxt)
+            negativeBtnTxt?.let { btnText -> negativeBtn.textValue = btnText }
 
-            if (positiveBtnTxt.isValidString())
-                negativeBtn.setTextForTextView(negativeBtnTxt)
+            dialogTitle.textValue = title
 
-            dialogTitle.setTextForTextView(title)
-
-            dialogContent.setTextForTextView(content)
+            dialogContent.textValue = content
 
         }
 
@@ -173,11 +118,5 @@ class CommonAlertDialog(
         setWidthPercent(85)
 
     }
-
-}
-
-fun TextView.setTextForTextView(input: String?) {
-
-    text = input
 
 }

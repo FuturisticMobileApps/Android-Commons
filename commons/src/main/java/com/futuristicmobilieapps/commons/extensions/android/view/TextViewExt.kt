@@ -6,10 +6,10 @@ import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
 import com.futuristicmobilieapps.commons.extensions.kotlin.validateString
 
 
-var TextView?.textValue: String
+var TextView?.textValue: String?
     get() = this?.text.toString().validateString()
     set(value) {
-        this?.text = value
+        this?.text = value.validateString()
     }
 
 fun TextView?.clearText() {
