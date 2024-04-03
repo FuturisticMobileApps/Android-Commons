@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.futuristicmobilieapps.commons.extensions.android.fields.convertToUsPhoneNumber
+import com.futuristicmobilieapps.commons.extensions.android.util.getStringResources
+import com.futuristicmobilieapps.commons.extensions.android.view.setclicklistener
+import com.futuristicmobilieapps.commons.extensions.kotlin.CommonAlertDialog
+import com.futuristicmobilieapps.commons.extensions.kotlin.popupDisplay
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -46,16 +49,16 @@ class SampleActivity : AppCompatActivity() {
         btn = findViewById(R.id.btn)
 
 
-        /*  btn.setclicklistener {
+        btn.setclicklistener {
 
 
-              CommonAlertDialog(
-                  title = getStringResources(R.string.alert_text),
-                  content = getStringResources(R.string.business_not_delete),
-                  singleButton = true
-              ).show(this.supportFragmentManager, "AddressBook_delete_popUp")
+            CommonAlertDialog(
+                title = getStringResources(R.string.alert_text),
+                content = getStringResources(R.string.business_not_delete),
+                singleButton = true
+            ).show(this.supportFragmentManager, "AddressBook_delete_popUp")
 
-              *//*val isValid = isSignInOrSignUpValidate(
+            /*val isValid = isSignInOrSignUpValidate(
                 emailEditText = emailEditText, emailInputLayout = emailInputLayout)
 
             Log.i("check", "onCreate:$isValid ")
@@ -67,11 +70,14 @@ class SampleActivity : AppCompatActivity() {
            } else {
 
            Toast.makeText(this, "SignInFailed", Toast.LENGTH_SHORT).show()
-            }*//*
+            }*/
 
-       }*/
+       }
 
-        tvTest.convertToUsPhoneNumber()
+        tvTest.popupDisplay(this,"check")
     }
+
+
+
 }
 
