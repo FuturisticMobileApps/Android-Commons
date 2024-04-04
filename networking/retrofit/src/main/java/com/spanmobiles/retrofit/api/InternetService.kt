@@ -12,6 +12,7 @@ import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_TOO_MANY_REQUESTS
 import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_UNSUPPORTED_MEDIA_TYPE
 import com.spanmobiles.retrofit.api.NetworkResponse.ERROR_UPGRADE_REQUIRED
 import com.spanmobiles.retrofit.api.NetworkResponse.STATUS_OK
+import okhttp3.Headers
 import retrofit2.Response
 
 
@@ -126,6 +127,16 @@ class InternetService {
             }
         }
     }
+}
+
+sealed interface APIEvent<T> {
+
+    data  class Success<T>(val data: T,val headers: Headers) : APIEvent<T>
+
+    data class Error<T>(
+        val exception: NetworkException = NetworkException(errorMessage = "Something went wrong!"),
+        val data : T? = null
+    ) : APIEvent<T>
 }
 
 

@@ -51,12 +51,13 @@ class SampleActivity : AppCompatActivity() {
 
         btn.setOnClickListeners {
 
-
-            CommonAlertDialog(
+            /*CommonAlertDialog(
                 title = getStringResources(R.string.alert_text),
                 content = getStringResources(R.string.business_not_delete),
                 singleButton = true
-            ).show(this.supportFragmentManager, "AddressBook_delete_popUp")
+            ).show(this.supportFragmentManager, "AddressBook_delete_popUp")*/
+
+      /////////////////////////////////////////////////////////////////////////////////////////////
 
             /*val isValid = isSignInOrSignUpValidate(
                 emailEditText = emailEditText, emailInputLayout = emailInputLayout)
@@ -71,6 +72,8 @@ class SampleActivity : AppCompatActivity() {
 
            Toast.makeText(this, "SignInFailed", Toast.LENGTH_SHORT).show()
             }*/
+
+       //////////////////////////////////////////////////////////////////////////////////////////////////
 
         }
 
