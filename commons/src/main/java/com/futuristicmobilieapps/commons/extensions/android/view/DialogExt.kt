@@ -58,8 +58,3 @@ fun AppCompatDialogFragment.showDialog(activity: FragmentActivity, tag: String) 
     showDialog(activity.supportFragmentManager, tag)
 }
 
-fun TextView.setTextForTextView(input: String?) {
-
-    text = input
-
-}

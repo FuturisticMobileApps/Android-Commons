@@ -28,12 +28,12 @@ object APIClient {
         connectionTimeOut: Long
     ): OkHttpClient.Builder =
         OkHttpClient.Builder().apply {
-            readTimeout(connectionTimeOut, TimeUnit.MINUTES)
-            callTimeout(connectionTimeOut, TimeUnit.MINUTES)
-            connectTimeout(connectionTimeOut, TimeUnit.MINUTES)
-            writeTimeout(connectionTimeOut, TimeUnit.MINUTES)
+            readTimeout(connectionTimeOut, TimeUnit.SECONDS)
+            callTimeout(connectionTimeOut, TimeUnit.SECONDS)
+            connectTimeout(connectionTimeOut, TimeUnit.SECONDS)
+            writeTimeout(connectionTimeOut, TimeUnit.SECONDS)
             retryOnConnectionFailure(false)
-            connectionPool(ConnectionPool(15, 15, TimeUnit.MINUTES))
+            connectionPool(ConnectionPool(connectionTimeOut.toInt(), connectionTimeOut, TimeUnit.SECONDS))
             addInterceptor(headerInterceptor)
             addInterceptor(loggingInterceptor)
         }
