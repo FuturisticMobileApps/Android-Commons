@@ -47,7 +47,7 @@ data class Heros(
 )
 
 fun main() {
-    // Your Retrofit setup code here
+
 
     val api = retrofit.create(SuperheroAPI::class.java)
 
@@ -55,17 +55,8 @@ fun main() {
 
         override fun onResponse(call: Call<List<Heros>>, response: Response<List<Heros>>) {
             if (response.isSuccessful) {
-                InternetService().handleNetworkResponse(
-                    result = response,
-                    onResponseFailure = { errorCode, errorMessage, _ ->
-                        // Handle failure case
-                        println("Error: $errorCode, Message: $errorMessage")
-                    },
-                    onResponseSuccess = { data, _, _ ->
-                        // Handle success case
-                        println("Success: $data")
-                    }
-                )
+                NetworkCall().dotNetworkCall(
+                    result = response,)
             }
         }
 
@@ -76,4 +67,6 @@ fun main() {
     })
 
 }
+
+
 

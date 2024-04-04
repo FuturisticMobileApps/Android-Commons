@@ -15,11 +15,3 @@ object NetworkResponse {
     const val STATUS_OK = 200
 }
 
-data class NetworkException(
-    val resultCode: Int? = null,
-    val request: String? = null,
-    val headers: String? = null,
-    val errorMessage: String? = "Something went wrong!",
-    val isNoConnection : Boolean = false,
-    val forceLogOut : Boolean = false
-)

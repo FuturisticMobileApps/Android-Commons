@@ -69,9 +69,6 @@ fun String?.isValidZipCode(): Boolean {
 }
 
 
-
-
-
 fun isSignInOrSignUpValidate(
     emailEditText: EditText? = null,
     passwordEditText: EditText? = null,

@@ -3,4 +3,5 @@ plugins {
 }
 dependencies{
     api(libs.bundles.retrofit)
+    implementation("org.testng:testng:6.9.6")
 }
