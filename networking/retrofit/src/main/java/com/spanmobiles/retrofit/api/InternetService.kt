@@ -20,7 +20,7 @@ class InternetService {
     fun <T> handleNetworkResponse(
         result: Response<T>?,
         onResponseFailure: ((Int, String?, T?) -> Unit)? = null,
-        onResponseSuccess: (T, String?, okhttp3.Headers) -> Unit
+        onResponseSuccess: (T, String?, Headers) -> Unit
     ) {
 
         when {
