@@ -5,25 +5,23 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import com.futuristicmobilieapps.commons.R
 import com.futuristicmobilieapps.commons.databinding.CommonAlertDialogBinding
 import com.futuristicmobilieapps.commons.extensions.android.view.onLoadDialog
 import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
-import com.futuristicmobilieapps.commons.extensions.android.view.textValue
+import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
+
 
 class CommonAlertDialog(
     private val title: String,
-    private val content: String,
-    private val positiveBtnTxt: String? = null,
-    private val negativeBtnTxt: String? = null,
-    private val singleButton: Boolean = false,
-    private val cancelableForBackButton: Boolean = false,
-    private val closeIconVisibility: Boolean = false,
+    private val message: String,
+    private val positiveBtnText: String? = null,
+    private val negativeBtnText: String? = null,
     private val onClickPositiveBtn: (() -> Unit)? = null,
     private val onClickNegativeBtn: (() -> Unit)? = null,
-    private val onClickSingleBtn: (() -> Unit)? = null,
 ) : AppCompatDialogFragment(R.layout.common_alert_dialog) {
 
     private lateinit var bind: CommonAlertDialogBinding
@@ -51,20 +49,23 @@ class CommonAlertDialog(
 
     private fun setTextFields() {
 
-        with(bind) {
+        bind.apply {
 
-            positiveBtnTxt?.let { btnText -> positiveBtn.textValue = btnText }
+            if (positiveBtnText.isValidString())
 
-            negativeBtnTxt?.let { btnText -> negativeBtn.textValue = btnText }
+                positiveBtn.setTextForTextView(positiveBtnText)
 
-            dialogTitle.textValue = title
+            if (positiveBtnText.isValidString())
 
-            dialogContent.textValue = content
+                negativeBtn.setTextForTextView(negativeBtnText)
+
+             dialogTitle.setTextForTextView(title)
+
+            dialogContent.setTextForTextView(message)
 
         }
 
     }
-
     private fun setOnClickListeners() {
 
         bind.apply {
@@ -93,6 +94,8 @@ class CommonAlertDialog(
 
             }
 
+
+
         }
 
     }
@@ -118,5 +121,12 @@ class CommonAlertDialog(
         setWidthPercent(85)
 
     }
+
+}
+
+
+fun TextView.setTextForTextView(input: String?) {
+
+    text = input
 
 }
