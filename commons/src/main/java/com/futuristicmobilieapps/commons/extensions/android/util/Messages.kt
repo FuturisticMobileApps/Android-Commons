@@ -9,29 +9,25 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.futuristicmobilieapps.views.dialogs.CommonAlertDialog
 
-fun Activity.showPermissionDeniedDialog(
-    isPermanentlyDenied: Boolean = false,
-    permission:String = ""
-) {
+fun Activity.showPermissionDeniedDialog(permission: String) {
+    val isPermanentlyDenied = !shouldShowRequestPermissionRationale(permission)
     CommonAlertDialog(
         title = "Permission Required",
-
-        message = if (isPermanentlyDenied) "You have denied the $permission permission many times, Please enable it from Settings"
-
-        else "$permission Permission is Required to access this feature Kindly enable it",
-
+        message = if (isPermanentlyDenied) {
+            "You have denied the $permission permission many times. Please enable it from Settings."
+        } else {
+            "$permission Permission is required to access this feature. Kindly enable it."
+        },
         positiveBtnText = if (isPermanentlyDenied) "Go to Settings" else "Ok",
         negativeBtnText = "Cancel",
         onClickPositiveBtn = {
             if (isPermanentlyDenied) {
                 openAppSettings()
             }
-        },
-        onClickNegativeBtn = {
-
         }
     ).show((this as FragmentActivity).supportFragmentManager, "permission_dialog")
 }
+
 
  fun Context.openAppSettings(){
      Log.i("check", "openAppSettings: settings")

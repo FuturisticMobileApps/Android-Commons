@@ -6,7 +6,7 @@ import androidx.activity.result.ActivityResultLauncher
 
 typealias PermissionLauncher = ActivityResultLauncher<String>
 
-fun Activity.showcheckPermission(
+fun Activity.checkRuntimePermission(
     isGranted: Boolean = false,
     permission: String,
     permissionGranted: () -> Unit
@@ -17,7 +17,7 @@ fun Activity.showcheckPermission(
     }
     if (!shouldShowRequestPermissionRationale(permission)) {
 
-        showPermissionDeniedDialog(true,permission)
+        showPermissionDeniedDialog(permission)
 
     } else {
 
@@ -25,7 +25,8 @@ fun Activity.showcheckPermission(
 
     }
 }
-fun Activity.showcheckPermission(
+
+fun Activity.checkArrayOfPermissions(
     allGranted: Boolean = false,
     permissions: Array<String>,
     permissionGranted: () -> Unit
@@ -34,15 +35,23 @@ fun Activity.showcheckPermission(
         permissionGranted()
         return
     }
-    if (permissions.any {!shouldShowRequestPermissionRationale(it)}) {
 
-        showPermissionDeniedDialog(true)
+    val deniedPermissions = permissions.filter {
+        !isPermissionGranted(it)
+    }
 
-    }else {
-
-        showPermissionDeniedDialog()
+    if (deniedPermissions.isNotEmpty()) {
+        for (permission in deniedPermissions) {
+            showPermissionDeniedDialog(permission)
+        }
+    } else {
+        permissionGranted()
     }
 }
 
+fun Activity.isPermissionGranted(permission: String): Boolean {
+
+    return checkSelfPermission(permission) == android.content.pm.PackageManager.PERMISSION_GRANTED
+}
 
 

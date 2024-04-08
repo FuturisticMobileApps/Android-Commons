@@ -2,7 +2,6 @@ package com.futuristicmobilieapps.androidcommons
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,7 +9,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.futuristicmobilieapps.commons.extensions.android.util.PermissionLauncher
-import com.futuristicmobilieapps.commons.extensions.android.util.showcheckPermission
+import com.futuristicmobilieapps.commons.extensions.android.util.checkArrayOfPermissions
+import com.futuristicmobilieapps.commons.extensions.android.util.checkRuntimePermission
 import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -31,11 +31,8 @@ class SampleActivity : AppCompatActivity() {
     private lateinit var nameInputLayout: TextInputLayout
     private lateinit var zipCodeInputLayout: TextInputLayout
 
-    val CAMERA = Manifest.permission.CAMERA
-    val CALENDAR = Manifest.permission.READ_CALENDAR
-    val LOCATION_ACCESS =  Manifest.permission.ACCESS_FINE_LOCATION
-
-    val permissions = arrayOf(CAMERA,CALENDAR,LOCATION_ACCESS)
+     private val permissions = arrayOf(Manifest.permission.CAMERA,Manifest.permission.READ_CALENDAR,
+        Manifest.permission.ACCESS_FINE_LOCATION)
 
 
     private lateinit var btn: Button
@@ -78,9 +75,9 @@ class SampleActivity : AppCompatActivity() {
 
     private fun checkStoragePermission(isGranted: Boolean) {
 
-        showcheckPermission(
+        checkRuntimePermission(
             isGranted ,
-            CAMERA) {
+            Manifest.permission.CAMERA) {
             click()
         }
     }
@@ -109,12 +106,13 @@ class SampleActivity : AppCompatActivity() {
 
     private fun handlePermissionsResult(allGranted: Boolean) {
 
-        showcheckPermission(permissions = permissions, allGranted = allGranted){
+        checkArrayOfPermissions(permissions = permissions){
 
                 click()
             }
         }
-    }
+
+}
 
 
 
