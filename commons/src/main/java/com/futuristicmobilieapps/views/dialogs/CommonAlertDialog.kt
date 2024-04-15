@@ -1,132 +1,54 @@
 package com.futuristicmobilieapps.views.dialogs
 
-import android.content.res.Resources
-import android.graphics.Rect
+import android.app.Dialog
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
-import com.futuristicmobilieapps.commons.R
-import com.futuristicmobilieapps.commons.databinding.CommonAlertDialogBinding
-import com.futuristicmobilieapps.commons.extensions.android.view.onLoadDialog
-import com.futuristicmobilieapps.commons.extensions.android.view.setOnClickListeners
-import com.futuristicmobilieapps.commons.extensions.kotlin.isValidString
-
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class CommonAlertDialog(
     private val title: String,
     private val message: String,
-    private val positiveBtnText: String? = null,
-    private val negativeBtnText: String? = null,
-    private val onClickPositiveBtn: (() -> Unit)? = null,
-    private val onClickNegativeBtn: (() -> Unit)? = null,
-) : AppCompatDialogFragment(R.layout.common_alert_dialog) {
+    private val icon: Int? = null,
+    private val isSingleButton: Boolean = false,
+    private val positiveBtnText: String? = "Ok",
+    private val negativeBtnText: String? = "Cancel",
+    private val onNegativeBtnClicked: (() -> Unit?)? = null,
+    private val isCancellable: Boolean = true,
+    private val onPositiveBtnClicked: (() -> Any?)? = null,
+) : AppCompatDialogFragment() {
 
-    private lateinit var bind: CommonAlertDialogBinding
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) =
-        onLoadDialog(isFullScreen = false, isAutoCancel = false)
+        return MaterialAlertDialogBuilder(requireContext()).apply {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            setTitle(title)
 
-        super.onViewCreated(view, savedInstanceState)
+            setMessage(message)
 
-        bind = CommonAlertDialogBinding.bind(view)
+            setCancelable(isCancellable)
 
-        loadLecture()
 
-    }
+            if (!isSingleButton)
+                setNegativeButton(negativeBtnText) { _, _ ->
 
-    private fun loadLecture() {
+                    onNegativeBtnClicked?.invoke()
 
-        setTextFields()
+                    if (isCancellable)
+                        dismiss()
+                }
 
-        setOnClickListeners()
 
-    }
-
-    private fun setTextFields() {
-
-        bind.apply {
-
-            if (positiveBtnText.isValidString())
-
-                positiveBtn.setTextForTextView(positiveBtnText)
-
-            if (positiveBtnText.isValidString())
-
-                negativeBtn.setTextForTextView(negativeBtnText)
-
-             dialogTitle.setTextForTextView(title)
-
-            dialogContent.setTextForTextView(message)
-
-        }
-
-    }
-    private fun setOnClickListeners() {
-
-        bind.apply {
-
-            ivClose.setOnClickListeners {
-
-                onClickNegativeBtn?.invoke()
-
-                dismiss()
-
+            setPositiveButton(positiveBtnText) { _, _ ->
+                onPositiveBtnClicked?.invoke()
+                if (isCancellable)
+                    dismiss()
             }
 
-            negativeBtn.setOnClickListener {
+            if (icon != null)
+                setIcon(icon)
 
-                onClickNegativeBtn?.invoke()
-
-                dismiss()
-
-            }
-
-            positiveBtn.setOnClickListener {
-
-                onClickPositiveBtn?.invoke()
-
-                dismiss()
-
-            }
-
-
-
-        }
+        }.create()
 
     }
-
-    private fun DialogFragment.setWidthPercent(percentage: Int) {
-
-        val percent = percentage.toFloat() / 100
-
-        val dm = Resources.getSystem().displayMetrics
-
-        val rect = dm.run { Rect(0, 0, widthPixels, heightPixels) }
-
-        val percentWidth = rect.width() * percent
-
-        dialog?.window?.setLayout(percentWidth.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-
-    }
-
-    override fun onResume() {
-
-        super.onResume()
-
-        setWidthPercent(85)
-
-    }
-
-}
-
-
-fun TextView.setTextForTextView(input: String?) {
-
-    text = input
 
 }

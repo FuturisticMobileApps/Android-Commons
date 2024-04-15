@@ -1,17 +1,12 @@
 package com.futuristicmobilieapps.commons.extensions.android.util
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.FragmentActivity
-import com.futuristicmobilieapps.views.dialogs.CommonAlertDialog
+import com.futuristicmobilieapps.views.dialogs.CommonDialog
 
 fun Activity.showPermissionDeniedDialog(permission: String) {
     val isPermanentlyDenied = !shouldShowRequestPermissionRationale(permission)
-    CommonAlertDialog(
+    CommonDialog(
         title = "Permission Required",
         message = if (isPermanentlyDenied) {
             "You have denied the $permission permission many times. Please enable it from Settings."
@@ -29,8 +24,3 @@ fun Activity.showPermissionDeniedDialog(permission: String) {
 }
 
 
- fun Context.openAppSettings(){
-     Log.i("check", "openAppSettings: settings")
-    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
-    startActivity(intent)
-}
