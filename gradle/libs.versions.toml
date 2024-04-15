@@ -11,6 +11,11 @@ espresso-core = "3.5.1"
 monitor = "1.6.1"
 coreKtxVersion = "1.5.0"
 retrofit = "2.9.0"
+ktorClientAndroid = "1.5.0"
+ktorClientSerialization = "1.5.0"
+kotlinxSerializationJson = "1.0.1"
+ktorClientLoggingJvm = "1.5.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -20,6 +25,13 @@ material = { group = "com.google.android.material", name = "material", version.r
 retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-converter-json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version = "5.0.0-alpha.6" }
+
+#Ktor
+ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktorClientAndroid" }
+ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktorClientSerialization" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-client-logging-jvm = { group = "io.ktor", name = "ktor-client-logging-jvm", version.ref = "ktorClientLoggingJvm" }
+
 
 #Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -33,7 +45,8 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.23" }
 
 [bundles]
 retrofit = ["retrofit2-retrofit","retrofit2-converter-json","okhttp3-logging-interceptor"]
-
+ktor = ["ktor-client-android", "ktor-client-serialization", "kotlinx-serialization-json", "ktor-client-logging-jvm"]
