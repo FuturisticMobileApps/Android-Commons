@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -34,6 +35,12 @@ android {
         jvmTarget = "1.8"
     }
 }
+configurations {
+    // Exclude the conflicting hamcrest-core dependency
+    all {
+        exclude(group = "org.hamcrest", module = "hamcrest-core")
+    }
+}
 
 dependencies {
     implementation(project(":commons"))
@@ -48,6 +55,12 @@ dependencies {
     androidTestImplementation ("org.mockito:mockito-android:3.12.4")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
     testImplementation ("org.robolectric:robolectric:4.5.1")
+
+    implementation(project(":networking:ktor"))
+    api(libs.bundles.ktor)
+
+    implementation ("io.ktor:ktor-client-okhttp:1.6.4")
+
 
 
 }
